@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "novuhq_novu",
+    "rank": 1,
+    "function": "HumanInteractionInboundService.tryHandleAction",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "Missing check: in parseToolApprovalActionId (src/app/agents/shared/tool-approval/action-id.ts:106-129) the 'approve-tool'/'approve-server' cases return null when `isMcp`, `toolName` or `mcpServerName` are missing, which turns the click into { outcome: 'ignored' }. The chart sends those cases straight from the verdict switch n22 to the shared `parseToolApprovalGrammarClick(...)?` box n20, which has both arms. The checks that decide it aren't drawn, and the not-charted list doesn't name them (it lists only the trust-scope lines 278/280, which only set optionId). The helper is 3 calls deep, so the depth-4 collapse doesn't cover it. The handleHumanAction half is right (human-interaction-inbound.service.ts:90-146, isAddressedHuman 548-570, respondsAsDeliveredPlatformUser 582-621, consumeNonPending 648). Dead arrows: (a) n24 `parseApprovalActionId(...)?` yes → n20 no: a self-hosted match always returns an object (service.ts:264-269), so `!click` is false. (b) n23 yes → n20 yes: parseToolApprovalActionId returned null (action-id.ts:86-88), so the click is null. (c) n22 default → n21 `throw ... Unhandled tool approval verdict`: unreachable, because n23 no already proved the verdict is one of the four (isToolApprovalVerdict, action-id.ts:57-59,86). (d) n36 kind switch ASK/TELL → n35 `settled?` yes: settleOptionClick returns null for ASK/TELL (service.ts:180-182). (e) n22 'approve'/'deny' → n20 no: those cases always return an object (action-id.ts:99-101).",
+    "fixHint": "Inline the remaining case bodies of an inlined helper's switch instead of jumping from the case edge to the caller's re-check of the helper's result. Prune a branch when an earlier box on the path decides it: an inlined helper's literal return value (an object, so truthy, or null) and a switch already validated by an earlier membership check, plus `never` exhaustive defaults."
+  },
+  {
+    "repo": "novuhq_novu",
+    "rank": 2,
+    "function": "AgentInboundHandler.isExistingConversationEventBlocked",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "Missing check: `await this.restoreMissingMentionFlag(config, thread, mentionMessage)`, a call written as a statement (inbound-turn.handler.ts:2052), sets `message.isMention = true` when the raw payload @-mentions the agent (lines 1501-1513: replyPolicy SMART/MENTION_ONLY, messageContainsUserMention, messageMentionsAgent). That decides the later `params.mentionMessage.isMention === true?` box n11 (requires-explicit-mention.ts:74), so it decides whether the function returns true. It isn't drawn as a step and isn't listed under not charted. The other gate arrows match the code: requiresExplicitMention (requires-explicit-mention.ts:69-87), maybeBlock (plan-limit-gate.service.ts:150-164), maybeStopKeylessInbound (inbound-turn.handler.ts:1032-1066) and isSignupCtaPosted (connect-claim-token.service.ts:112-119). Dead arrow: n9 `isKeyless || isHumanRelay?` no → n8 `reason?` no → n7 `params.config.isKeyless?` yes → n6. n9 no already proved isKeyless is false, so that yes arm can't be taken on that path.",
+    "fixHint": "Draw (or list as not charted) awaited helpers called as statements when they write to a parameter or field that a later box reads, such as the `message.isMention = true` mutation. Carry facts from compound conditions (`!(a || b)` gives `!a`) to later boxes on the same path."
+  },
+  {
+    "repo": "novuhq_novu",
+    "rank": 3,
+    "function": "AddAgentIntegration.execute",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "Missing check: in NovuEmailProvisioningService.execute, when `providerId === AgentEmailInbox && isAgentSharedInboxEnabled()` (find-or-create-novu-email.service.ts:109-110), the code returns `this.provisionVanityInbox(...)`. That helper retries in a loop and throws: it rethrows non-collision errors, throws `inboxAddresses.taken(...)` and finally a ConflictException 'That address was just taken' (lines 195-212). It also calls resolveDefaultOutboundIntegrationId, which can throw a ConflictException (365-368). The chart sends n9 yes straight to the success outcome n3. provisionVanityInbox is neither drawn nor listed; the not-charted list names only the withTransaction callbacks. That is the Agent Email Inbox path on shared-inbox (cloud) deployments. The top-level and linkExistingIntegration/createLink arrows match the code (add-agent-integration.usecase.ts:58-199, 207-233, 293-353). Dead arrows: (a) n22 `EmailProviderIdEnum.NovuAgent === EmailProviderIdEnum.AgentEmailInbox && isAgentSharedInboxEnabled()` is constant false, but its yes arm to n18 is drawn. (b) On the AgentEmailInbox path, n9 no means isAgentSharedInboxEnabled() was false (n9's left side is constant true), so n6 `isAgentSharedInboxEnabled()?` yes → n5 throw can't happen there. (c) n50 `providerId === AgentEmailInbox` yes → … → n44 `providerId === NovuAgent?` yes is impossible on the same integration (usecase.ts:186,193). (d) n37 `providerId === Telegram?` yes is impossible after n50 or n44 yes.",
+    "fixHint": "Inline or list helpers reached through `return this.helper(...)` inside an inlined helper when they can throw (provisionVanityInbox). Fold comparisons between enum constants (the bound parameter made `NovuAgent === AgentEmailInbox` constant), and prune arms that an earlier equality test on the same field already decided."
+  }
+]

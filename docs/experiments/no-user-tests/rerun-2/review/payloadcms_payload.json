@@ -1,0 +1,32 @@
+[
+  {
+    "repo": "payloadcms_payload",
+    "rank": 2,
+    "function": "checkFileRestrictions",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["missing-check"],
+    "deadArrowOnly": false,
+    "evidence": "The main structure is right (checkFileRestrictions.ts:100-276, sanitizeFilename.ts:8-24), but many arrows can't be taken. (a) The getFileTypeFallback(file.name) call at line 213 re-draws sanitizeFilename (n32→n29→n28/n27→n26) with an `Invalid filename` throw arm (n26 no → n25). sanitizeFilename already succeeded on the same file.name at line 100 (n60…n58), so that throw can't happen. (b) n55 `''.replace(...)?` yes, and n28 `sanitized = ''` → n27 → n26 yes: the empty string is falsy. (c) After every `errors changed` step (n6, n10, n12, n17, n18, n37, n43), the shared n5 `errors.length > 0?` still draws a no arm. (d) After n33 `detected?` no, n15 `passesMimeTypeCheck && detected?.mime === 'application/pdf'` yes and n11 `detected && !passesMimeTypeCheck` yes are impossible. (e) After n47/n48 set detected to svg/xml, n46 `isISOBaseMediaMimeType(detected.mime)` yes is impossible. Missing check: on the checkFileContents=false path, `isAllowed` (lines 104-109) is a ternary on `configMimeTypes.length`: an allow-list via validateMimeType versus the RESTRICTED_FILE_EXT_AND_TYPES block-list. The chart shows only `isAllowed?` (n2), with no step box and no not-charted entry, while it does draw the same choice (n41) on the other path.",
+    "fixHint": "Prune decisions that a step box or an earlier box on the path already settles (errors.push makes the length > 0, a literal assignment fixes truthiness or mime). Memoise a pure helper inlined twice on the same arguments (sanitizeFilename(file.name)) so its throw is drawn once. Draw a ternary initializer of a checked variable as its own decision or step box."
+  },
+  {
+    "repo": "payloadcms_payload",
+    "rank": 3,
+    "function": "getFileHandler",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["missing-check"],
+    "deadArrowOnly": false,
+    "evidence": "Wrong arrow (not only dead arrows): the transformer loop in handleDynamicFileRequest (handleDynamicFileRequest.ts:99-141) has no path for running zero times. All four authorizeDocument exits (n52 no, n53 no, n55 no, n56 no) go into the loop body box n50 `result.response?`. In the code, an empty pipeline (planRequestPipeline returned [], line 316) skips straight to line 151 `if (currentResponse)` → retrieveFileResponse at line 157, and the chart has no such edge. Dead arrows: every retrieveFileResponse call here passes no `operation`, so it defaults to 'read' (getFile.ts:51,77,90; handleDynamicFileRequest.ts:64,157). The eight `operation === 'transform'?` yes arms (n6, n9, n20, n23, n35, n38, n67, n70) and their outcomes can't happen. Also, n50 yes sets currentResponse = result.response (line 131), so n45 no → n44 `currentResponse?` no can't happen. Missing check: the access checks at handleDynamicFileRequest.ts:44-50 (a loop over isTransform [true, false]) and 58-62 call withFileTransformAccessContext → checkFileAccess, which throws Forbidden (checkFileAccess.ts:22,58). The chart goes n60 no → n15 NotFound and n59 yes → retrieveFileResponse without them. The not-charted list names only the checkFileAccess call at getFile.ts:58 and the authorizeDocument callbacks, so the comment at lines 41-43 (don't leak existence) is exactly what's lost.",
+    "fixHint": "Give every loop drawn as one pass a skip edge for zero iterations. Bind default parameter values at an inlined call site and fold the checks they decide (`operation === 'transform'`). List collapsed helpers called as statements that can throw (withFileTransformAccessContext with checkFileAccess) under not charted, as the brief says collapsed throwing helpers are."
+  }
+]

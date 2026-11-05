@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": ["wrong-arrow", "missing-check"],
+    "deadArrowOnly": false,
+    "evidence": "fetch-permitted-ast-root-fields.ts:21-51 is glue (parseCurrentLevel, then fetchPolicies/fetchPermissions, then getDBQuery). The chart is mostly getDBQuery's query building (get-db-query.ts:34-374): every non-throw outcome is the same knex builder (`dbQuery`/`wrapperQuery`), and the permission decision itself is the CASE/WHEN SQL built inside preprocessors and callbacks. Dead arrows: needsInnerQuery is re-asked at n30 (:163) and n21 (:242) after n39 (:129) decided it; hasCaseWhen at n12 (:321) after n19 (:246); sortRecords at n7 (:362) after n33 (:159); hasMultiRelationalSort at n6 (:367) after n26 (:203). Each draws both arrows from branches that already fixed the value. Missing and not listed: applySort (get-db-query.ts:109) isn't in scope or under not charted, yet its sort callback throws InvalidQueryError through getColumnPath (utils/get-column-path.ts:43,55) and addJoin (apply-query/add-join.ts:104,165) for a bad sort field.",
+    "fixHint": "Rank thin orchestrators whose result is a builder object lower in scan. Prune re-asked flags (needsInnerQuery, hasCaseWhen, sortRecords) on branches that already decided them. Follow or list assigned calls like `const sortResult = applySort(...)` whose callbacks can throw."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["not-charted-dominates"],
+    "deadArrowOnly": false,
+    "evidence": "Every throw in the try (users.ts:292-325, and the inlined validateEmail :180, checkUniqueEmails :58/:77, checkPasswordPolicy :108, checkProviderEntitlement :198, getCollectionFromSchema) is drawn as an arrow straight to the only outcome, `await super.updateMany(keys, data, opts)`. In the code each throw lands in the catch at :329-331, which sets `opts.preMutationError = err`, then still runs the `'role' in data` and `'status' in data` checks (:333-346) before super.updateMany, and super.updateMany rethrows the error (items.ts:813-814). So the chart has one outcome for rejected and accepted updates, has no step box for the catch, and its throw arrows skip n3/n2, which it draws only on the no-error path. Also n3 `'role' in data?` -> no -> n0 skips the 'status' check (:337), and the not-charted list says :333 and :337 aren't drawn while n3 and n2 draw them.",
+    "fixHint": "Draw a catch that only records the error (`opts.preMutationError = err`) as a step box, and route throw arrows into it and on through the code that follows. Keep outcomes apart when the opts they carry differ (error recorded or not), or treat the helper's rethrow of preMutationError as a throw outcome."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 3,
+    "function": "validateApplyDiff",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "deadArrowOnly": false,
+    "evidence": "All arrows match validate-diff.ts:72-203: Joi error -> throw (:78), empty diff -> NO (:81-87), hash match or force -> YES (:91), then the collection (:93-117), field (:119-143), system-field (:145-171, including the create/delete/update-array action) and relation (:173-198) checks, each loop shown as one pass with a warning, ending at the hash-mismatch throw (:200). No arrow is dead and no unlisted throw is missing.",
+    "fixHint": "Minor: the step box for `relation` (n12) sits only on the no side of `diffRelation.related_collection?`. The yes side, which appends `-> related_collection` (:175), has no box, so it reads as if relation were set only when there is no related collection."
+  }
+]

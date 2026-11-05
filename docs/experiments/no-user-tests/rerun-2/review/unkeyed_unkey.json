@@ -1,0 +1,17 @@
+[
+  {
+    "repo": "unkeyed_unkey",
+    "rank": 2,
+    "function": "retryIntervalFromResponse",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "deadArrowOnly": false,
+    "evidence": "Matches retries.ts:196-222 exactly: retry-after-ms truthy (198) then finite and >= 0 (200) returns it, else falls to retry-after; empty retry-after returns 0 (206); integer seconds * 1000 (211); integer Date.parse (216) then deltaMS > 0 ? ceil : 0 (218); else 0 (221). The three `return 0` sites merge into one outcome with the same value; no arrow is decided by an earlier check and nothing is left uncharted.",
+    "fixHint": "None needed. Readability only: `deltaMS` (217) has no step box, so its definition is only in the source."
+  }
+]

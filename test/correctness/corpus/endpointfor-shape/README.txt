@@ -1,0 +1,3 @@
+PostHog endpointFor shape: prepare(target, ...) is inlined at six call sites, each with its own `target === 'ui'` box. After the caller's `target === 'ui'` yes, the first copy's no arrow is dead; on the flags, assets-override, custom-region and switch 'assets'/'api' calls, target isn't 'ui', so those five copies' yes arrows are dead (6 dead arrows, as the reviewer found on the real chart).
+Settle pass (v1, today's keys) should redirect all six and drop the six copies' `target === 'ui'` boxes (and the unreachable first rewriteRequestPath box).
+Inputs: new Router({ rewriteRequestPath: true }, 'eu', false).endpointFor('flags', '/x') -> 'rewritten:/flags/x'; endpointFor('ui', '/x') -> 'ui:/x'.

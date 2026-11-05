@@ -1,0 +1,46 @@
+[
+  {
+    "repo": "outline_outline",
+    "rank": 1,
+    "function": "documentUpdater",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The outcome checks are right: lastRevision conflict (documentUpdater.ts:132), the deprecatedReason path with the isActive throw (:137-148), publish/save/done (:162-177) and the reload (:183). The patch-mode ValidationError throws in DocumentHelper.applyMarkdownToDocument (DocumentHelper.tsx:704-731, called at :106) aren't inlined or listed. About 25 of the 38 boxes are setter checks (:78-104) that not charted says aren't drawn, yet they're drawn on some paths (n50, n49, n48) and skipped on others (n51 no goes straight to n46).",
+    "fixHint": "Inline static methods of imported helper classes, including .tsx modules. Draw effect-only setter checks either everywhere or nowhere: listing them as not charted while drawing them on some paths makes a combinatorial tangle that hides the decision."
+  },
+  {
+    "repo": "outline_outline",
+    "rank": 2,
+    "function": "WebsocketsProcessor.perform",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [
+      "other"
+    ],
+    "evidence": "A 60-case switch on event.name (WebsocketsProcessor.ts:42-1030). Each case looks up a model and emits websocket messages. The outcomes are emit() return values or undefined, depending only on whether a case writes 'return socketio...emit()' or 'emit(); return;', so cases such as documents.add_user (:283) show as plain 'undefined'. There is also a wrong box: n10 renders the destructured check '!document || !srcCollection' (:165) as '!await Promise.all([...])', which is always false.",
+    "fixHint": "Have scan skip or down-rank event-dispatch switches whose cases are side-effect handlers. When substituting array-destructured bindings (const [a,b] = await Promise.all([...])), substitute the elements, not the array."
+  },
+  {
+    "repo": "outline_outline",
+    "rank": 3,
+    "function": "handlePaste",
+    "mechanical": false,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "long-labels",
+    "alsoCategories": [],
+    "evidence": "The paths match PasteHandler.tsx:66-322: not editable gives false; in a code block (isInCode inlined) gives true; Prosemirror or Claude HTML gives false; a URL (isUrl inlined) gives true; a VSCode code block or inline code gives true; markdown parses to true or false; otherwise false. The URL sub-branches and list handling are effect-only and listed. Labels fail the rule (77% short) because event.clipboardData.getData(...) and the JSON.parse(vscode) ternary are substituted into every box, and literal options appear as checks ('({ inclusive: true })?.onlyMark', and requireProtocol, which defaults to true).",
+    "fixHint": "Don't substitute long initializers into every box (keep 'html' and 'vscodeMeta' as names). Fold default parameters and literal option objects into constants, so the isUrl/isInCode option checks disappear."
+  }
+]

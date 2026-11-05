@@ -1,0 +1,234 @@
+[
+ {
+  "each": [
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "big",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "big",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "small",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "small",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "big",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "big",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "small",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "small",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    }
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "big",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "big",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "small",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": true
+        },
+        "kind": "small",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "big",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "big",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "small",
+        "off": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "cfg": {
+         "on": false
+        },
+        "kind": "small",
+        "off": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    }
+   ]
+  ]
+ }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "novuhq_novu",
+    "rank": 3,
+    "function": "AddAgentIntegration.execute",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "Box n9 (find-or-create-novu-email.service.ts:109, AgentEmailInbox && isAgentSharedInboxEnabled()) goes 'yes' straight to the 'return response' outcome, but the code returns this.provisionVanityInbox(...) (:110), which is neither drawn nor listed: it calls resolveDefaultOutboundIntegrationId inside its loop (:169, outside the try) and so throws ConflictException('No outbound email integration...') when no primary/demo integration exists (shared inbox is on in this branch), rethrows non-collision errors (:196-197) and throws lastError/ConflictException after 5 collisions (:212). Everything else checks out: the PROD/argument/agent guards, assertHumanRelay, both enforceEmailTier copies, enforceSingletonEmail, createLink's existingLink/Telegram checks, and the web-chat flag; the provisionedNewLink effects and withTransaction callbacks are correctly listed.",
+    "fixHint": "Draw provisionVanityInbox when it is called in a return (or list it under not charted if it is over 10 boxes or its throws sit in a loop/try Vantle skips). Don't let a helper called from a return silently become the plain return outcome."
+  }
+]

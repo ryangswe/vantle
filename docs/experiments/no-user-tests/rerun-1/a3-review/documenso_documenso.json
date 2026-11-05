@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "documenso_documenso",
+    "rank": 2,
+    "function": "completeDocumentWithToken",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The guard chain is drawn correctly: the inlined assertSenderNotDisabled/getUserDisabledStatus (assert-user-not-disabled.ts:50,64), mapSecondaryIdToDocumentId (utils/envelope.ts:206), assertRecipientNotExpired, the 2FA block (complete-document-with-token.ts:162-199), the four name/email step boxes (228-245) rejoining at recipientEmail (247), and the date-field branch picking the right `fields` for the unsigned-field check (254-319). The transaction, the post-completion effect ifs and the triggerWebhook catch are listed. But line 67 calls `unsafeBuildEnvelopeIdQuery(id, EnvelopeType.DOCUMENT)` inside the findFirst arguments, and it throws INVALID_BODY ('Invalid envelope ID' for a malformed envelopeId, 'Invalid template ID' for a templateId; utils/envelope.ts:55-59, 85-89). The chart neither draws nor lists it, so a bad id shows as the 404 'Document not found' path. Those throws sit inside ts-pattern `.with()` callbacks. The same blind spot hides isRecipientAuthorized's throws at line 175 (is-recipient-authorized.ts:143 'User not found', plus verify-2fa-token.ts:26/30), which are rarer.",
+    "fixHint": "Count a helper whose throws sit inside callbacks (for example ts-pattern `match().with(cb)`) as a throwing helper when it is called in an argument: draw it, or list it under not charted as 'callback that can throw'. Today a helper whose body has no direct `throw` is silently treated as safe. Optionally, model `match(x).with(pattern, cb)` chains as a switch."
+  }
+]

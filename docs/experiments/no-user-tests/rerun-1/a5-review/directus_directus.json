@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": ["missing-check"],
+    "evidence": "The function is glue (fetch-permitted-ast-root-fields.ts:25-50): clone the AST, parse the level, fetch permissions unless admin (line 34, drawn), then build a query with getDBQuery. 45 of the chart's boxes are getDBQuery's query-builder plumbing (get-db-query.ts:51-371), drawn twice (once per side of the admin check), and every non-throw outcome is 'the query'. The json() throws (parse-function.ts:35-55 and 69-98) and their arrows are right, but applySort (get-db-query.ts:109, called when query.sort is set) can throw InvalidQueryError from its sort.map callback (sort.ts:102/111 into add-join.ts:104/165 and get-column-path.ts:43/55). It is neither drawn nor listed, although the rule lists a helper that throws only from a callback.",
+    "fixHint": "List a helper whose throws all come from its own callbacks (applySort) the way isRecipientAuthorized is listed in documenso. Scan should rank down wrappers whose decisions come almost entirely from inlined builder helpers. Don't copy a whole inlined helper subgraph for each side of an earlier check that only changes an argument value."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-charted-dominates",
+    "alsoCategories": ["other"],
+    "evidence": "Every guard in the try block (users.ts:291-328, with checkUniqueEmails, validateEmail, checkPasswordPolicy, checkProviderEntitlement and readSingleton inlined) is drawn correctly into the catch, which goes on to super.updateMany. The chart has one outcome, so a rejected update (tfa_secret set, duplicate email, bad password) looks the same as a valid one. The rejection really happens in super.updateMany, which throws opts.preMutationError (items.ts:813). That call is drawn as one listed box, and the catch's `opts.preMutationError = err` (users.ts:330) gets no step box, although 'opts changed (line 334)' does. The role/status checks (333/337) are listed and yet partly drawn, with an inconsistent step box.",
+    "fixHint": "Show the catch's assignment as a step box, since opts flows into the outcome call. Better, follow a flag that a callee checks and throws on (preMutationError), so the rejected paths end in their real error outcomes. Draw a listed check either everywhere or nowhere."
+  }
+]

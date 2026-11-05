@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "outline_outline",
+    "rank": 2,
+    "function": "WebsocketsProcessor.perform",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [],
+    "evidence": "This is a 992-line switch from event name to socket emits (WebsocketsProcessor.ts:43-1032). The chart is that switch plus 'record found?' checks. Each arrow I checked matches the code, including the Promise.all destructure (:159-167) and the users.promote guest branch (:985-1006). But the function returns nothing useful, and its real work is side effects the chart can't show. 14 cases (documents.move, collections.add_user/remove_group, groups.add_user/remove_user/delete, users.update\u2026) collapse into one 'undefined', with their emits, joins and `cannot(user,'read',\u2026)` checks inside batch callbacks (:545-569, :767-797, :822-856, :875-924). Channel choice lives in getDocumentEventChannels/getCollectionEventChannels, which aren't drawn, and collection.isPrivate (:356) hides inside `rooms` in n17. Readable: no. n12 is about 1,000 characters of repeated `await Promise.all(...)`, and n4 and n5 are identical.",
+    "fixHint": "Have scan rank event-dispatch switches whose cases end in side effects lower. If one is charted, list emits that aren't returned and the checks inside loop/batch callbacks under not charted, and bind awaited locals once instead of inlining them into every outcome."
+  }
+]

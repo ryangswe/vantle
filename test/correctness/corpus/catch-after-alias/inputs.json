@@ -1,0 +1,22 @@
+[
+ {
+  "each": [
+   [
+    {
+     "admin": true
+    },
+    {
+     "admin": false
+    }
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    "{}",
+    "{"
+   ]
+  ]
+ }
+]

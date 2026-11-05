@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": ["missing-check"],
+    "evidence": "The function's own logic is a single admin check (fetch-permitted-ast-root-fields.ts:34) around parsing and a getDBQuery call. The chart draws getDBQuery's query-shape branches twice (get-db-query.ts:51, 100-371), and every outcome is just `dbQuery` or `wrapperQuery` with 'changed (line N)' step boxes. The permission flags this function exists to fetch are built in getColumnPreprocessor and the case/when trick at 246, and neither is drawn (246 is listed as an effect). The arrows themselves match the code. But throws are missing and not listed: applySort (109) can throw InvalidQueryError via addJoin (add-join.ts:104/165) and getColumnPath (get-column-path.ts:43/55), and parseCurrentLevel (30) can throw via parseJsonFunction (parse-function.ts:36-95).",
+    "fixHint": "Scan should rank functions whose outcomes differ by value, not by query-builder side effects. Throw detection should follow throws that come from a helper's own callbacks (applySort's sort.map) and from awaited declaration initialisers (parseCurrentLevel)."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "evidence": "All four throw outcomes (RecordNotUniqueError at users.ts:293, the tfa_secret/provider/external_identifier InvalidPayloadErrors at 309/314/324) sit inside the try at 290-328. The catch at 329 stores each one in opts.preMutationError and execution goes on to super.updateMany (352). ItemsService rethrows it only after the filter hooks and validateAccess (items.ts:760-814), so a ForbiddenError can take its place. The function never ends at those boxes: every path reaches super.updateMany. The not-charted list names the catch, and it says helper throws in the same try are 'handled by a catch', but it still draws the try's own throw statements as function outcomes. That contradicts itself and misleads a reader.",
+    "fixHint": "When a throw sits inside a try whose catch neither rethrows nor returns, route the arrow to the catch, then to the code after the try (here 'record preMutationError' then super.updateMany), not to a throw outcome. At minimum, label those outcomes as caught."
+  }
+]

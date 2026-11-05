@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "medusajs_medusa",
+    "rank": 1,
+    "function": "prepareLineItemData",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [
+      "not-charted-dominates"
+    ],
+    "evidence": "The arrows that are drawn are right: two throws (prepare-line-item-data.ts:95,:102), then isCustomPrice/taxLines/adjustments/cartId with step boxes (:176-:189), and the sale-price `if` (:115) is listed. But the `isDefined(item?.requires_shipping) ? item.requires_shipping : hasShippingProfile || someInventoryRequiresShipping` ternary (:136-138), which scan counts as one of the function's 12 decision points, decides the returned line item's requires_shipping. It is neither drawn nor listed. So the chart shows input guards and attach-if-present plumbing, while the function's real computations (compare-at price on sale, the shipping requirement) are listed or missing.",
+    "fixHint": "List (or draw as a step) a value-level `?:` whose result reaches the returned value, as the 'sides end the same but set a variable used later' rule already does for `if` statements. Smaller issues: the step boxes print a spurious 'cartId = data.cartId' for a destructured parameter, and the shared outcome is labelled 'lineItem (changed)' even on the path where nothing changed it."
+  }
+]

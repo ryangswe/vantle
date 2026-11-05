@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "PostHog_posthog-js", "rank": 1, "function": "PostHog.capture",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "wrong-arrow", "alsoCategories": [],
+    "evidence": "The early-return gates are right: not loaded, is_capturing (inlined), event name, cookieless $snapshot, bot, rate limit, before_send (src/posthog-core.ts:1774-2004). The 'no' arrows of the later independent ifs are wrong. save_campaign_params (:1832, n58) no goes straight to the timestamp check (:1953, n50), skipping the save_referrer, bot-pageview, rate-limit-context, $unset, $set_once and truncate checks the code still runs. n57, n56 and n55 skip the same way. This came with 30+ 'too many combinations' warnings. Around 25 'this changed; data changed' step boxes add noise.",
+    "fixHint": "When the variant cap is hit, keep sequential ifs joined to the following statement instead of jumping to a later variant's box. Never let a capped path drop checks. Drop step boxes whose only content is 'X changed'."
+  },
+  {
+    "repo": "PostHog_posthog-js", "rank": 2, "function": "RequestRouter.endpointFor",
+    "mechanical": true, "faithful": true, "mainDecision": true, "readable": true, "usable": true,
+    "category": "none", "alsoCategories": [],
+    "evidence": "Path normalisation, the ui/flags/assets targets, the asset-host override, the CUSTOM region and the assets/api switch all route as in src/utils/request-router.ts:150-182. The inlined _prepareEndpoint's ui check and rewriteRequestPath check are right (:103-114), and its not-charted entries are side effects only. Minor noise: `target === 'ui'` is redrawn inside _prepareEndpoint on branches where it is statically false (n7/n11/n15).",
+    "fixHint": "Optional: prune an inlined helper's checks that the caller's branch already decides (a target known not to be 'ui')."
+  },
+  {
+    "repo": "PostHog_posthog-js", "rank": 3, "function": "PostHog._init",
+    "mechanical": true, "faithful": false, "mainDecision": false, "readable": false, "usable": false,
+    "category": "not-a-decision", "alsoCategories": ["wrong-arrow", "not-charted-dominates"],
+    "evidence": "_init is setup glue: every outcome returns `this`, and the only result-changing checks are the empty token and __loaded guards (src/posthog-core.ts:846-868). The rest is config and side-effect wiring, 10 entries of it not charted. It has the same capped-path bug as capture: process_person (:879, n34) no jumps to n32, skipping the _inCookielessMode (:954) and __preview_deferred_init_extensions (:973) checks.",
+    "fixHint": "Have scan rank down functions whose outcomes all return the same value (`this`/void) and whose decisions are mostly side effects. Fix the capped-path arrow bug noted for capture."
+  }
+]

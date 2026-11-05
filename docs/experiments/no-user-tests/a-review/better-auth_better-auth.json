@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "better-auth_better-auth", "rank": 1, "function": "resolveBaseURL",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "missing-check", "alsoCategories": ["other"],
+    "evidence": "Arrows match the code for all 44 boxes, but inlined withPath starts with assertHasProtocol(url) (src/utils/url.ts:74, body :52-70), which throws for a URL without http(s) or one that won't parse. That throw is an outcome; it isn't drawn and isn't in not-charted (the only entry is the getBaseURL catch at :176). Labels also substitute arguments badly: the request === undefined branch draws live checks on `undefined?.headers.get(...)` (n35/n34/n26), and `isRequestLike(source) ? source : undefined?.headers.get(\"x-forwarded-host\")` (n59/n67) is missing its parentheses, so it reads as different logic.",
+    "fixHint": "Follow (or list as not charted) void helper calls that can throw, such as assertHasProtocol, and calls inside boxes that can throw (checkHasPath). Parenthesise substituted argument expressions, and fold away checks whose subject is statically undefined instead of drawing dead branches."
+  },
+  {
+    "repo": "better-auth_better-auth", "rank": 2, "function": "handleOAuthUserInfo",
+    "mechanical": false, "faithful": null, "mainDecision": true, "readable": false, "usable": false,
+    "category": "long-labels", "alsoCategories": [],
+    "evidence": "Only 89% of labels are short; the longest is 2683 chars. Substituting the destructured `createdAccount` puts the whole runWithTransaction(...) callback into the binding-conflict condition (src/oauth2/link-account.ts:563, source :543-570), and the 461 option-assignment step box is repeated about 15 times. It does chart the link/sign-up/session decision. Faithfulness wasn't judged: 505 lines with six not-charted entries.",
+    "fixHint": "Don't substitute a local whose value is an awaited call with a callback argument; keep the variable name (`createdAccount.accountId !== ...`) and show its source line. Collapse repeated identical step boxes."
+  },
+  {
+    "repo": "better-auth_better-auth", "rank": 3, "function": "toOpenApiSchema",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": true, "usable": false,
+    "category": "missing-check", "alsoCategories": [],
+    "evidence": "The instanceof dispatch, the union-length checks and the intersection-merge checks all route correctly. But the union outcome is the bare name `unionSchema` (n23/n24), which hides `def.inclusive === false ? {oneOf} : {anyOf}` (src/plugins/open-api/generator.ts:670-673). The fallthrough outcome `baseSchema` likewise hides `zodType instanceof z.ZodString ? constraints : {}` (:719-723). Both checks change the returned schema, and neither is listed as not charted.",
+    "fixHint": "When an outcome is a local const, substitute its initializer as other outcomes already do. If the initializer is a ternary, split it into a decision box with two outcomes."
+  }
+]

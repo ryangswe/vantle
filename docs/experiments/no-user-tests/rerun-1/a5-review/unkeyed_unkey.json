@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "unkeyed_unkey",
+    "rank": 3,
+    "function": "encodeDeepObjectObject",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-charted-dominates",
+    "alsoCategories": [
+      "not-a-decision"
+    ],
+    "evidence": "The chart is correct: value == null goes to undefined (encodings.ts:250), and isPlainObject is inlined with every branch right (primitives.ts:155-162, false goes to the EncodingError throw at encodings.ts:261, true goes to out.slice(1)). Its catch at :163 and the forEach callback at :264 are listed. But the chart is only the input guard. The encoding itself is all in the listed forEach callback (encodings.ts:264-285): skip null entries, recurse for plain objects, and arrays vs scalars through mapDefined. The return value depends on it, and none of it is drawn.",
+    "fixHint": "Draw a forEach callback's branches as a loop body (or treat array-iteration callbacks like loops). Otherwise scan should not rank serializers whose only drawn decision is the argument guard."
+  }
+]

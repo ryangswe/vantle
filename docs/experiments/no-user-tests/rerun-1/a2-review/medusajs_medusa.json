@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "medusajs_medusa",
+    "rank": 1,
+    "function": "prepareLineItemData",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [
+      "wrong-arrow"
+    ],
+    "evidence": "Two checks that set fields of the returned lineItem are missing and not listed: the sale-price `if` that sets compareAtUnitPrice (prepare-line-item-data.ts:115-124, no node for if2 at all) and the requiresShipping ternary (:136-138). The four presence checks that are drawn (:176-190) are the same kind of field-setting check. Also the step box n6 says `lineItem = { quantity: \u2026 }` (the :140 literal) and is reached from 'adjustments? no' after the 'changed (line 177/181)' boxes, so the chart says lineItem is reset on those paths.",
+    "fixHint": "Trace locals that feed the returned object literal (compareAtUnitPrice, requiresShipping) and draw or list the ifs/ternaries that set them. A step box at a join must not show one path's state (initial values) when other paths that reach it changed that variable."
+  }
+]

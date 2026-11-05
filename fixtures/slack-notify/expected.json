@@ -1,0 +1,118 @@
+{
+  "$comment": "Hand-written reference chart for src/notify.ts#shouldNotify, modeled on Slack's notification flowchart. `test` is the condition in terms of shouldNotify's own parameters; `label` is the reference product-language label (used for label scoring in M2).",
+  "flow": "src/notify.ts#shouldNotify",
+  "root": "muted",
+  "outcomes": { "YES": "true", "NO": "false" },
+  "nodes": {
+    "muted": {
+      "label": "Channel muted?",
+      "test": "prefs.isChannelMuted(user.id, channel.id)",
+      "yes": "mutedThread",
+      "no": "dnd"
+    },
+    "mutedThread": {
+      "label": "Thread message && user subscribed?",
+      "test": "isSubscribedThread(msg, user)",
+      "yes": "dnd",
+      "no": "NO"
+    },
+    "dnd": { "label": "User in DnD?", "test": "dnd.isActive(user.id)", "yes": "dndOverride", "no": "broadcast" },
+    "dndOverride": { "label": "DnD override?", "test": "msg.dndOverride", "yes": "broadcast", "no": "NO" },
+    "broadcast": {
+      "label": "@channel/@everyone/@here message?",
+      "test": "isBroadcastMention(msg)",
+      "yes": "suppressed",
+      "no": "subscribedThread"
+    },
+    "suppressed": {
+      "label": "@channel mentions suppressed?",
+      "test": "prefs.suppressesBroadcastMentions(user.id, channel.id)",
+      "yes": "NO",
+      "no": "subscribedThread"
+    },
+    "subscribedThread": {
+      "label": "Thread message && user subscribed?",
+      "test": "isSubscribedThread(msg, user)",
+      "yes": "threadsEverything",
+      "no": "channelPref"
+    },
+    "threadsEverything": {
+      "label": "threads_everything pref on?",
+      "test": "prefs.threadsEverything(user.id)",
+      "yes": "channelNothing",
+      "no": "channelPref"
+    },
+    "channelNothing": {
+      "label": "Channel notification pref is not \"Nothing\"?",
+      "test": "prefs.channelPref(user.id, channel.id, device) !== 'nothing'",
+      "yes": "mobile",
+      "no": "NO"
+    },
+    "channelPref": {
+      "label": "What is the user's channel notification pref for this device?",
+      "switch": "prefs.channelPref(user.id, channel.id, device)",
+      "cases": {
+        "'nothing'": "NO",
+        "'everything'": "everythingThread",
+        "'mentions'": "channelMentions",
+        "'default'": "globalPref"
+      }
+    },
+    "everythingThread": { "label": "Thread message?", "test": "isThreadMessage(msg)", "yes": "everythingSubscribed", "no": "mobile" },
+    "everythingSubscribed": {
+      "label": "User subscribed?",
+      "test": "subscriptions.isSubscribed(user.id, msg.threadTs)",
+      "yes": "mobile",
+      "no": "channelMentions"
+    },
+    "channelMentions": { "label": "DM?", "test": "isDirectMessage(msg)", "yes": "gateThread", "no": "mention" },
+    "mention": {
+      "label": "@mention, or comment on a file the user owns (desktop)?",
+      "test": "mentionsUser(msg, user) || (device === 'desktop' && isCommentOnOwnedFile(msg, user))",
+      "yes": "mobile",
+      "no": "here"
+    },
+    "here": { "label": "@here?", "test": "isHereMention(msg)", "yes": "presence", "no": "highlight" },
+    "presence": { "label": "User presence active?", "test": "presence.isActive(user.id)", "yes": "gateThread", "no": "highlight" },
+    "highlight": { "label": "Highlight word?", "test": "hasHighlightWord(msg, user)", "yes": "gateThread", "no": "NO" },
+    "gateThread": { "label": "Thread message?", "test": "isThreadMessage(msg)", "yes": "gateSubscribed", "no": "mobile" },
+    "gateSubscribed": {
+      "label": "User subscribed?",
+      "test": "subscriptions.isSubscribed(user.id, msg.threadTs)",
+      "yes": "mobile",
+      "no": "NO"
+    },
+    "globalPref": {
+      "label": "What is the user's global notification pref for this device?",
+      "switch": "prefs.globalPref(user.id, device)",
+      "cases": {
+        "'all'": "allThread",
+        "'mentions'": "mention",
+        "'dms'": "dms",
+        "'highlight_words'": "highlightWords",
+        "'never'": "NO"
+      }
+    },
+    "allThread": { "label": "Thread message?", "test": "isThreadMessage(msg)", "yes": "allSubscribed", "no": "mobile" },
+    "allSubscribed": {
+      "label": "User subscribed?",
+      "test": "subscriptions.isSubscribed(user.id, msg.threadTs)",
+      "yes": "mobile",
+      "no": "mention"
+    },
+    "dms": { "label": "DM?", "test": "isDirectMessage(msg)", "yes": "gateThread", "no": "NO" },
+    "highlightWords": {
+      "label": "@mention or highlight word?",
+      "test": "mentionsUser(msg, user) || hasHighlightWord(msg, user)",
+      "yes": "gateThread",
+      "no": "NO"
+    },
+    "mobile": { "label": "Mobile?", "test": "device === 'mobile'", "yes": "pushThreshold", "no": "YES" },
+    "pushThreshold": {
+      "label": "Past mobile push timing threshold?",
+      "test": "push.isPastTimingThreshold(user.id, msg.ts)",
+      "yes": "YES",
+      "no": "NO"
+    }
+  }
+}

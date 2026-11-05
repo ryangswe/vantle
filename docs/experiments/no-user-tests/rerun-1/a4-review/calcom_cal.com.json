@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "calcom_cal.com",
+    "rank": 3,
+    "function": "preprocess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "All arrows match form-builder/schema.ts:124-176 and the three inlined helpers (utils.ts:1-50): variant guard throw (130), fullName correction (134) shown as step boxes rejoining at typeof-string (146), JSON try/success (154) and the object branch with the lastName step box (168-169) feeding the right preprocessNameFieldDataWithVariant copy. The two JSON.parse throw paths (schema.ts:157, and utils.ts:37, the 'John Doe' split) are not drawn but are both listed under not charted.",
+    "fixHint": "Readable but noisy: the zod schema is substituted into every label (n5-n10, n22) and getFullName's `${first} ${last}` outcome is shown as 'getFullName(...) \u2192 nameString' (n6); keep a local's name when its initializer is long. The utils.ts:37 catch is a real outcome (name split) that could be drawn since JSON.parse throwing is knowable. Infeasible branches (typeof value on an object, correctedVariant after it was set to fullName) could be pruned.",
+    "usable": true
+  }
+]

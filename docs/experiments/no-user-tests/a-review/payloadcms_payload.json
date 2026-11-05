@@ -1,0 +1,49 @@
+[
+  {
+    "repo": "payloadcms_payload",
+    "rank": 1,
+    "function": "sanitizeField",
+    "mechanical": false,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-charted-dominates",
+    "alsoCategories": [
+      "too-big",
+      "missing-check"
+    ],
+    "evidence": "The function mainly applies config defaults (labels, hooks, validate, admin, slug, tabs: 32 not-charted effects, sanitize.ts:218-640). The chart keeps the validation throws, buried in 76 boxes with duplicated subtrees (e.g. the reserved-name chain is drawn twice, n94-n85 and n104-n95). The MissingEditorProp throw, reached synchronously at sanitize.ts:399-403 via :419 when richTextSanitizers is absent, is missing and not listed: n27 goes to the blocks check on both branches.",
+    "fixHint": "Inline local closures that are called synchronously (sanitizeRichText). Don't split paths on mutation state for effect-only checks: the 'too many combinations' splits cause the duplication and the >50 size. Have scan down-rank functions whose branches are mostly effect-only defaults."
+  },
+  {
+    "repo": "payloadcms_payload",
+    "rank": 2,
+    "function": "checkFileRestrictions",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Arrows match the code. The early !checkFileContents exit, the SVG/XML inspection, the mime-config branch, the restricted-type branch, the unsafe-SVG check and the final errors.length throw are all drawn (checkFileRestrictions.ts:103-276). The skipped ISO-media check (:183-195) and the detection catch (:160) are named in not charted. Hard to read: the tail from :199 is copied five times, once per tracked 'detected' state, and has constant-false boxes like 'image/svg+xml' === 'application/xml'.",
+    "fixHint": "Fold conditions that become constant after substitution, and merge copies of the tail that differ only in tracked state. The not-charted note for :183 says 'both sides end the same way', but its errors.push does change the outcome via :269, and the check is drawn on the SVG paths. The read-failure throw in the getFileBuffer closure (:139) is unlisted, which is minor."
+  },
+  {
+    "repo": "payloadcms_payload",
+    "rank": 3,
+    "function": "getFileHandler",
+    "mechanical": false,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [
+      "long-labels"
+    ],
+    "evidence": "None of the access-control checks appear. checkFileAccess, called at getFile.ts:58, isn't inlined: its path-traversal and read-access Forbidden throws are at checkFileAccess.ts:21 and :57. authorizeDocument, called at handleDynamicFileRequest.ts:73, isn't inlined either: its Forbidden throws are at :307 and :326 (n51 no goes straight to the transformer loop). Neither is listed in not charted. What remains is routing plus Range handling. The empty-pipeline path (:151-157 with no iterations) is also missing.",
+    "fixHint": "Inline helpers whose call is wrapped as (await f(...))! or destructured (const {a,b} = await f(...)), and treat throwing helpers as checks. Don't repeat the whole inlined call expression in each outcome label (the 'retrieveFileResponse({...}) → ...' text is what fails the 90%-short rule). Draw the zero-iteration exit of a one-pass loop."
+  }
+]

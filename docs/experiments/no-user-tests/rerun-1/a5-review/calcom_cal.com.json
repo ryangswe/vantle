@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "calcom_cal.com",
+    "rank": 3,
+    "function": "preprocess",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "evidence": "preprocess's own checks are right (form-builder/schema.ts:130-175): the missing-variant throw, the variant correction, null to \"\", the string/JSON path with the catch listed, and the object path. The inlined helpers (form-builder/utils.ts:6-49), though, are drawn without the types already established. On the string path (N37 yes, schema.ts:146) getFullName's `typeof response === \"string\"` has a 'no' arrow to `${response.firstName} ${response.lastName}` (utils.ts:19-24), and getFirstAndLastName's `typeof value === \"string\"` has a 'no' arrow to returning value unparsed (utils.ts:33,47). On the object path, firstAndLastNameResponse is an object literal (schema.ts:164), yet the chart draws 'yes' to JSON.parse(value) (utils.ts:33-36), 'yes' to returning it as a string (utils.ts:19) and 'no' to \"\" (utils.ts:15). That's five arrows no execution takes.",
+    "fixHint": "Propagate typeof narrowing and known object-literal values into inlined helpers, and resolve their checks per call site rather than drawing both sides."
+  }
+]

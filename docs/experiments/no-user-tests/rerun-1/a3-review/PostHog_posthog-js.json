@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 1,
+    "function": "PostHog.capture",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every drop path is drawn in code order with correct arrows to `undefined`: uninitialised (posthog-core.ts:1774), is_capturing inlined correctly (5075-5084), bad event name (1784), $snapshot in cookieless mode (1790), bot drop (1799), client rate limit (1807), before_send rejection (1999-2002); all other paths converge on n29 and reach `data` through the survey/tour/finalSet/before_send/replay checks (1953-2010). The $set-shaping checks at 1877, 1917 and the 1949/2058 effects are drawn on some paths but skipped on others; all are named in not charted, so this is allowed. Readability is poor: 116 nodes for ~20 distinct checks, the save_campaign_params/save_referrer pair is drawn four times with dead arrows (e.g. n104 yes when both settings are false, n58 no when both are true), and step boxes run to hundreds of characters.",
+    "fixHint": "Prune branches whose condition is already decided on the path (n58/n82/n94/n104), stop forking the chart on assignments that don't feed a later check (systemTime, campaignParams), and be consistent about drawing the 1877/1917 checks: either on every path or on none."
+  }
+]

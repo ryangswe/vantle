@@ -1,0 +1,50 @@
+[
+ {
+  "repo": "Infisical_infisical",
+  "rank": 1,
+  "function": "validateRequestAgainstPolicy",
+  "mechanical": false,
+  "faithful": true,
+  "mainDecision": false,
+  "readable": false,
+  "usable": false,
+  "category": "too-big",
+  "alsoCategories": [
+   "not-charted-dominates"
+  ],
+  "evidence": "146 decision boxes, 58 not-charted entries and a single outcome ({ isValid: errors.length === 0, ... }, certificate-policy-service.ts:722). This is an errors.push validator (:358-728). All the subject/SAN/key-usage policy checks are effects that are not charted, while the later checks (:588-650) are copied for every branch. Faithful only in the empty sense that everything ends in one box.",
+  "fixHint": "Treat accumulate-then-return validators as checklists (each check → the error it adds), not as path state. That removes both the blow-up and the not-charted list."
+ },
+ {
+  "repo": "Infisical_infisical",
+  "rank": 2,
+  "function": "signCertFromCa",
+  "mechanical": false,
+  "faithful": false,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "too-big",
+  "alsoCategories": [
+   "missing-check"
+  ],
+  "evidence": "107 decision boxes (internal-certificate-authority-service.ts:2345-2835), from key-usage and SAN branches copied after :2608. $validatePqcLicense (:2481; it throws BadRequest without the pkiPqc plan, certificate-utils.ts:36) is neither drawn nor listed, and boxes like 'dto.keyUsages === undefined && undefined' (:2558) are left unfolded.",
+  "fixHint": "Merge paths again after effect-only branches. Inline same-file arrow helpers ($validatePqcLicense), or list them. Fold `x && undefined` to false."
+ },
+ {
+  "repo": "Infisical_infisical",
+  "rank": 3,
+  "function": "issueCertFromCa",
+  "mechanical": false,
+  "faithful": false,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "too-big",
+  "alsoCategories": [
+   "missing-check"
+  ],
+  "evidence": "92 decision boxes (internal-certificate-authority-service.ts:1879-2340), with checks after :2135 copied for every branch. $validatePqcLicense (:2028) can throw and is neither drawn nor listed. The throwUnlessCan permission checks (:1953-1962) and validateCertificateDetailsAgainstTemplate (:2203) are listed, but under 'both sides end the same way', which hides that they throw.",
+  "fixHint": "Merge paths again after effect-only branches. Inline or list same-file helpers. Never file a call that can throw under 'effect … both sides end the same way'."
+ }
+]

@@ -1,0 +1,122 @@
+[
+ {
+  "each": [
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true,
+         "legacy": true
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true,
+         "legacy": false
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false,
+         "legacy": true
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false,
+         "legacy": false
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    }
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true,
+         "legacy": true
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true,
+         "legacy": false
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false,
+         "legacy": true
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false,
+         "legacy": false
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    }
+   ]
+  ]
+ }
+]

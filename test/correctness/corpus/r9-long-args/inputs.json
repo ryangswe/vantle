@@ -1,0 +1,556 @@
+[
+ {
+  "each": [
+   [
+    true,
+    false
+   ],
+   [
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": true
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": true,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": true
+     }
+    },
+    {
+     "primaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-p",
+          "name": "n-p"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "p",
+      "off": false
+     },
+     "secondaryContextForTheCurrentRequestThatIsVeryLongIndeedOkayYes": {
+      "registry": {
+       "lookupPrimaryWidgetForTenantWithFallback": {
+        "$fn": {
+         "$proto": "Widget",
+         "fields": {
+          "short": false,
+          "code": "c-s",
+          "name": "n-s"
+         }
+        }
+       }
+      },
+      "tenantIdentifier": "s",
+      "off": false
+     }
+    }
+   ]
+  ]
+ }
+]

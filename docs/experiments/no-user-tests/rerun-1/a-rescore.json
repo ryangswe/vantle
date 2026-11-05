@@ -1,0 +1,515 @@
+[
+ {
+  "repo": "Infisical_infisical",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 312
+ },
+ {
+  "repo": "Infisical_infisical",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 301
+ },
+ {
+  "repo": "Infisical_infisical",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 260
+ },
+ {
+  "repo": "PostHog_posthog-js",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 59
+ },
+ {
+  "repo": "PostHog_posthog-js",
+  "rank": 2,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 19
+ },
+ {
+  "repo": "PostHog_posthog-js",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "a2",
+  "boxes": 15
+ },
+ {
+  "repo": "RocketChat_Rocket.Chat",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 50
+ },
+ {
+  "repo": "RocketChat_Rocket.Chat",
+  "rank": 2,
+  "before": true,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 57
+ },
+ {
+  "repo": "RocketChat_Rocket.Chat",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 31
+ },
+ {
+  "repo": "better-auth_better-auth",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 60
+ },
+ {
+  "repo": "better-auth_better-auth",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 49
+ },
+ {
+  "repo": "better-auth_better-auth",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "missing-check",
+  "src": "a",
+  "boxes": 36
+ },
+ {
+  "repo": "bluesky-social_atproto",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "mechanical",
+  "boxes": 0
+ },
+ {
+  "repo": "bluesky-social_atproto",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "mechanical",
+  "boxes": 0
+ },
+ {
+  "repo": "bluesky-social_atproto",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "extraction-error",
+  "src": "a",
+  "boxes": null
+ },
+ {
+  "repo": "calcom_cal.com",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 176
+ },
+ {
+  "repo": "calcom_cal.com",
+  "rank": 2,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 33
+ },
+ {
+  "repo": "calcom_cal.com",
+  "rank": 3,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a4",
+  "boxes": 23
+ },
+ {
+  "repo": "directus_directus",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "a4",
+  "boxes": 35
+ },
+ {
+  "repo": "directus_directus",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "wrong-arrow",
+  "src": "a4",
+  "boxes": 21
+ },
+ {
+  "repo": "directus_directus",
+  "rank": 3,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 21
+ },
+ {
+  "repo": "documenso_documenso",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 28
+ },
+ {
+  "repo": "documenso_documenso",
+  "rank": 2,
+  "before": false,
+  "after": true,
+  "category": "none",
+  "src": "a4",
+  "boxes": 22
+ },
+ {
+  "repo": "documenso_documenso",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 18
+ },
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 176
+ },
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 32
+ },
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 3,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 38
+ },
+ {
+  "repo": "immich-app_immich",
+  "rank": 1,
+  "before": false,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 30
+ },
+ {
+  "repo": "immich-app_immich",
+  "rank": 2,
+  "before": false,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 30
+ },
+ {
+  "repo": "immich-app_immich",
+  "rank": 3,
+  "before": false,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 21
+ },
+ {
+  "repo": "launchdarkly_js-core",
+  "rank": 1,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a2",
+  "boxes": 13
+ },
+ {
+  "repo": "launchdarkly_js-core",
+  "rank": 2,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 13
+ },
+ {
+  "repo": "launchdarkly_js-core",
+  "rank": 3,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 13
+ },
+ {
+  "repo": "logto-io_logto",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "mechanical",
+  "boxes": 1
+ },
+ {
+  "repo": "logto-io_logto",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "mechanical",
+  "boxes": 0
+ },
+ {
+  "repo": "logto-io_logto",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "a",
+  "boxes": null
+ },
+ {
+  "repo": "medusajs_medusa",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "missing-check",
+  "src": "a4",
+  "boxes": 8
+ },
+ {
+  "repo": "medusajs_medusa",
+  "rank": 2,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 9
+ },
+ {
+  "repo": "medusajs_medusa",
+  "rank": 3,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 8
+ },
+ {
+  "repo": "n8n-io_n8n",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 838
+ },
+ {
+  "repo": "n8n-io_n8n",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 716
+ },
+ {
+  "repo": "n8n-io_n8n",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 224
+ },
+ {
+  "repo": "novuhq_novu",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 34
+ },
+ {
+  "repo": "novuhq_novu",
+  "rank": 2,
+  "before": true,
+  "after": false,
+  "category": "missing-check",
+  "src": "a2",
+  "boxes": 12
+ },
+ {
+  "repo": "novuhq_novu",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "missing-check",
+  "src": "a2",
+  "boxes": 45
+ },
+ {
+  "repo": "outline_outline",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 128
+ },
+ {
+  "repo": "outline_outline",
+  "rank": 2,
+  "before": false,
+  "after": false,
+  "category": "not-a-decision",
+  "src": "a2",
+  "boxes": 28
+ },
+ {
+  "repo": "outline_outline",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 27
+ },
+ {
+  "repo": "payloadcms_payload",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 230
+ },
+ {
+  "repo": "payloadcms_payload",
+  "rank": 2,
+  "before": true,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 74
+ },
+ {
+  "repo": "payloadcms_payload",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 53
+ },
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 1,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 6
+ },
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 2,
+  "before": true,
+  "after": true,
+  "category": "none",
+  "src": "a",
+  "boxes": 6
+ },
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "not-charted-dominates",
+  "src": "a4",
+  "boxes": 5
+ },
+ {
+  "repo": "vendure-ecommerce_vendure",
+  "rank": 1,
+  "before": false,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 70
+ },
+ {
+  "repo": "vendure-ecommerce_vendure",
+  "rank": 2,
+  "before": true,
+  "after": false,
+  "category": "too-big",
+  "src": "mechanical",
+  "boxes": 111
+ },
+ {
+  "repo": "vendure-ecommerce_vendure",
+  "rank": 3,
+  "before": false,
+  "after": false,
+  "category": "long-labels",
+  "src": "mechanical",
+  "boxes": 17
+ }
+]

@@ -1,0 +1,71 @@
+[
+ {
+  "each": [
+   [
+    {
+     "isLocked": {
+      "$fnSeq": [
+       {
+        "$async": false
+       },
+       {
+        "$async": true
+       }
+      ]
+     }
+    }
+   ],
+   [
+    {
+     "$fn": {
+      "$async": {
+       "$undefined": true
+      }
+     }
+    }
+   ],
+   [
+    "x"
+   ],
+   [
+    true
+   ]
+  ]
+ },
+ {
+  "each": [
+   [
+    {
+     "isLocked": {
+      "$fn": {
+       "$async": true
+      }
+     }
+    },
+    {
+     "isLocked": {
+      "$fn": {
+       "$async": false
+      }
+     }
+    }
+   ],
+   [
+    {
+     "$fn": {
+      "$async": {
+       "$undefined": true
+      }
+     }
+    }
+   ],
+   [
+    "x"
+   ],
+   [
+    true,
+    false
+   ]
+  ]
+ }
+]

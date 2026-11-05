@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "launchdarkly_js-core",
+    "rank": 1,
+    "function": "validateFileOverrideSourceOptions",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The paths throw (40-46), the duplicateKeysHandling default/accept (56-69), the changeDetection throw (72-79), the pollInterval number/finite/max/min chain (82-115), the yamlParser accept (122-134) and the YAML-without-parser throw (136-142) are all drawn, and the arrows match createOverrideSource.ts. The step boxes show the right value on each branch before rejoining (e.g. n10 pollIntervalSeconds = MINIMUM at 111, n24 duplicateKeysHandling = 'fail'). The dedupe warning at line 50 is correctly listed as an effect.",
+    "fixHint": "None needed. The step boxes repeat the unchanged `logger`/`paths` assignments, which could be dropped."
+  }
+]

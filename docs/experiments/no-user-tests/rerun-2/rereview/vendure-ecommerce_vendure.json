@@ -1,0 +1,17 @@
+[
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 2,
+    "function": "OrderModifier.modifyOrder",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["missing-check"],
+    "deadArrowOnly": false,
+    "evidence": "Two arrows no execution can take: (1) n43 `row.quantity < row.quantity?` yes -> n42 InsufficientStockError. n43 is reached only via n45 no, and there `let correctedQuantity = quantity` (order-modifier.ts:490) is never changed because the `if` at :491 is false, so the check at :509 is always false on this path. (2) n38 `cancelLinesInput.length === 0 || summate(cancelLinesInput,'quantity') === 0?` yes -> n34. n38 is reached only through n39 `row.quantity < initialLineQuantity` yes, and cancelLinesInput is always one row with quantity `initialLineQuantity - quantity` > 0 (:517-522), so cancelOrderByOrderLines:270 is always false. Separately there is a throw the chart doesn't show and doesn't list. ProductVariantService.applyChannelPriceAndTax is in scope, but its delegate ProductPriceApplicator.applyChannelPriceAndTax throws InternalServerError('error.no-active-tax-zone') (product-price-applicator.ts:85-86). It is called from getProductVariantOrThrow (order-modifier.ts:961, the n51 yes path for a new line) and from the loop at :666. The chart neither draws it nor lists it in Not charted: 'productPriceApplicator' appears nowhere in chart-2.json. With no tax zone and a new addItems line, the code throws there first, but the chart routes on to OrderLimitError, InsufficientStockError, the country-code UserInputError and so on. Everything else checks out: the guard order (:419, :422, :446-468, :482-510, :581-611, :613-626, :658-662, order-calculator.ts:99, :692, :699-701, :721-729), the step boxes n18/n19 (both rejoin n17 correctly), and n16 keeping `initialTotalWithTax` by name (order is mutated after :417).",
+    "fixHint": "Propagate a step or branch assignment into later checks. On the n45-no branch correctedQuantity is row.quantity, so `x < x` folds to false, and its dead yes arrow and outcome n42 should be dropped. A literal one-element array with a positive quantity should fold the inlined cancelOrderByOrderLines:270 check the same way. When an inlined helper delegates to a method on an injected service (this.productPriceApplicator) that Vantle doesn't draw, apply the same can-throw listing as for other collapsed helpers, so the product-price-applicator.ts:86 throw shows up under Not charted."
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "repo": "RocketChat_Rocket.Chat",
+    "rank": 2,
+    "function": "getRoomWithOptionToJoin",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "The function's own logic is drawn correctly: the switch on channelType (processWebhookMessage.ts:54), and in the default arm the line-77 `room?` check, then line 88, then `throw invalid-channel` (lines 77-93). The two calls there are listed as not charted. The problem is the inlined getRoomByNameOrIdWithOptionToJoin. Its destructured defaults and omitted arguments are never bound, so the chart draws arrows the call never takes. In the '#' arm (call at :56, no type, errorOnEmpty defaults to true at getRoomByNameOrIdWithOptionToJoin.ts:15): n4 `type && room.t !== type?` → yes → n2 is dead because type is undefined; n5 `room === null?` → yes → null is dead because `!room && errorOnEmpty` (n6, :69) already threw; n8 `errorOnEmpty?` → no → null is dead; n27 `tryDirectByUserIdOnly?` → yes is dead because it defaults to false (:13). In the '@' arm (call at :62, type 'd'): n55 `nameOrId.startsWith('@') || type === 'd'?` → no → n54 is dead, and so are n53 → yes, n37 → no and n34 → yes. In the inlined createDirectMessage, n16/n42 → yes → error-invalid-user is dead: with excludeSelf=false, roomUsers is [me, ...users] (createDirectMessage.ts:73), so when length===1, roomUsers[0] is me and `_id !== me._id` is false (:76). Every other arrow checks out: :23-:101 and helper :27-:97. Minor: meteor `check(usernames, [String])` (createDirectMessage.ts:19-21) can throw and isn't listed, but it's an unresolved external.",
+    "fixHint": "When inlining, bind destructured-object parameter defaults and omitted properties (errorOnEmpty=true, tryDirectByUserIdOnly=false, type=undefined/'d') and fold constant conditions, the way positional defaults like excludeSelf=false are already substituted. Also prune branches that the substituted values decide (roomUsers[0] === me)."
+  },
+  {
+    "repo": "RocketChat_Rocket.Chat",
+    "rank": 3,
+    "function": "setUsernameWithValidation",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "The function's own checks are right and in order: username, user, federated, AllowUsernameChange, same-username return, validateUsername, checkUsernameAvailability (blocked/existingUser/existingTeam), then saveUserIdentity (setUsername.ts:32-74). Each throw maps correctly. The inlined saveUserIdentity/_setUsername/setRealName part has dead arrows. (1) n23 `user.username === String(rawUsername).trim().trim()?` → yes → n16 is dead: n30 (saveUserIdentity.ts:56) only enters when usernameChanged, i.e. previousUsername = user.username !== username (:51-54), and _setUsername's user is that same fullUser (setUsername.ts:102-104). (2) n16/n17 `user?` → no → could-not-change-username is dead: _setUsername returns `fullUser || …` (setUsername.ts:102,105,162), and fullUser already passed n31 `if (!user) return false` (saveUserIdentity.ts:46-48). (3) n13 `typeof rawName !== 'undefined' && nameChanged?` → yes is dead: the call passes only `{ _id, username }` (setUsername.ts:70), so rawName is undefined and the whole setRealName subtree (n8-n12) can't run. Two step boxes in a row (n15 'user changed (line 64)' → n14 'user changed') are redundant but harmless.",
+    "fixHint": "Treat properties missing from an object-literal argument as undefined when inlining, and fold typeof checks on them. Carry the facts an earlier branch establishes (usernameChanged, user non-null) into inlined helpers, or at least prune helper branches that contradict the caller's established conditions."
+  }
+]

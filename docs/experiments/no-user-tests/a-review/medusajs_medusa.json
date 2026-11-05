@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "medusajs_medusa",
+    "rank": 1,
+    "function": "prepareLineItemData",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["not-a-decision"],
+    "evidence": "The code runs all four optional-field checks one after another (cart/utils/prepare-line-item-data.ts:176-190), but the chart sends the sale-price check's 'no' (n16, :115) and isCustomPrice's 'no' (n15, :176) straight to the final `lineItem (changed)` return. That skips taxLines, adjustments and cartId. n13's 'no' likewise skips the cartId check. This follows the 'too many combinations… shown as unknown' warnings, and the not-charted list wrongly says those four checks aren't drawn. The function mostly builds a DTO. Its only real business rule, requiresShipping (:126-138), isn't drawn.",
+    "fixHint": "When path-state combinations are truncated, never rewire edges to a terminal: keep the control-flow successor and mark the value unknown. Keep the not-charted list consistent with what's drawn. Scan could rank down builders whose checks are mostly optional field assignments."
+  },
+  {
+    "repo": "medusajs_medusa",
+    "rank": 2,
+    "function": "getLastPaymentStatus",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The status ladder (order/utils/aggregate-status.ts:67-111) is drawn exactly: requires_action, then refunded or partially refunded, then captured, authorized, canceled, awaiting and not_paid, with correct arrows. The tally loop that feeds those counts (:33-61, including the 1 vs 0.5 partial weighting) is only listed as two not-charted 'effects'. Their note says 'both sides end the same way', which isn't quite true, because the counts decide the later checks. It's still listed, so this passes.",
+    "fixHint": "For a check inside a loop that accumulates a value later tested, say 'feeds a later check' rather than 'both sides end the same way'."
+  },
+  {
+    "repo": "medusajs_medusa",
+    "rank": 3,
+    "function": "csvSortFunction",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The comparator is drawn completely and correctly (product/steps/generate-product-csv.ts:45-68): a Product/Variant prefix route into the inlined comparator for each column map, both-known, a-known (-1), b-known (1) and the localeCompare fallback. It's small but a genuine ordering decision.",
+    "fixHint": "None."
+  }
+]

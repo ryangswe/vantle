@@ -1,0 +1,74 @@
+[
+ {
+  "each": [
+   [
+    true,
+    false
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "short": true,
+         "code": "code-x",
+         "name": "name-x"
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "short": false,
+         "code": "code-x",
+         "name": "name-x"
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    }
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "short": true,
+         "code": "code-y",
+         "name": "name-y"
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "short": false,
+         "code": "code-y",
+         "name": "name-y"
+        }
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    }
+   ]
+  ]
+ }
+]

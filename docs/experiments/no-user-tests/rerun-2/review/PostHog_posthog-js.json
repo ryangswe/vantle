@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 1,
+    "function": "PostHog.capture",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "All early returns (posthog-core.ts:1774, 1779 via inlined is_capturing 5075-5084, 1784, 1790, 1799, 1807, 2001) and the data-building steps are drawn correctly, and the skipped side-effect checks (1812, 1819, 1995, 2058, 2063) are listed. The only errors are dead arrows through shared boxes: n59 `save_campaign_params || save_referrer` (1839) is reached from n64 (save_campaign_params yes, 1832) and n61 (save_referrer yes, 1835), where its 'no' arrow can't happen, and from n65->n62 (both no), where its 'yes' arrow can't happen; n17 `event_name === ProductTourEventName.SHOWN` (1982) is reached from the survey DISMISSED/SENT branch (1964) and the survey SHOWN branch (1975), where event_name is a survey event ('survey shown' vs 'product tour shown'), so its 'yes' arrow is dead on those paths; n25 `shouldSendMinimalFlagCalledEvent` (1960) 'yes' is dead after n45 yes (1877) or n37 yes (1918), which both require !shouldSendMinimalFlagCalledEvent.",
+    "fixHint": "Carry branch facts (a checked condition, or its component vars) across a rejoin and prune arrows of later checks they decide, or split the shared box per incoming fact. Minor: the step restating isBot/clientRateLimitContext (n57) sits after line 1840, after the checks that use them, and n61's label omits line 1826."
+  },
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 2,
+    "function": "RequestRouter.endpointFor",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "The routing is right (request-router.ts:151-179: ui, flags, assets with override, custom region, then the assets/api switch), and the rewriteRequestPath branch of the inlined _prepareEndpoint (110) is right on every copy. But _prepareEndpoint's `target === 'ui'` check (104) is drawn at each of its six call sites with both arrows, though the caller already decides it: after n29 'target === ui' yes (155), n3's 'no' arrow is dead; on the flags (159), assets-override (165), custom-region (170) and switch 'assets'/'api' (176) paths target is not 'ui', so n7, n11, n15, n19 and n23 'yes' arrows are dead. That's six dead arrows; every other arrow and check is right.",
+    "fixHint": "When inlining a helper, substitute the caller's known facts about the argument (target is 'ui' / not 'ui' / 'flags') and fold the helper's checks they decide."
+  },
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 3,
+    "function": "PostHog._init",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": true,
+    "evidence": "_init (posthog-core.ts:844-1135) is setup glue: after the token check (846) and the already-loaded check (853) every path returns `this` (1134), and the rest is a chain of 'this changed (line N)' steps; the checks that remain (person_profiles 877, cookieless 954/1063, bootstrap 1014-1039, segment 1106) only pick side effects. Also a dead arrow: n7 `startInCookielessMode` (1063) is decided by n28 `this._inCookielessMode()` (954, the same const from 952), yet both its arrows are drawn from both n28 branches.",
+    "fixHint": "scan should rank down functions whose every path returns the same value (`this`) and whose branches only guard side effects; fold a check on a const already tested upstream."
+  }
+]

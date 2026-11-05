@@ -1,0 +1,6 @@
+{
+ "options": {
+  "maxInline": 10,
+  "maxBoxes": 7
+ }
+}

@@ -1,0 +1,75 @@
+[
+ {
+  "each": [
+   [
+    "t1"
+   ]
+  ],
+  "this": [
+   {
+    "$proto": "Svc",
+    "fields": {
+     "enabled": true,
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "$proto": "Svc",
+    "fields": {
+     "enabled": true,
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "$proto": "Svc",
+    "fields": {
+     "enabled": false,
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": true
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "$proto": "Svc",
+    "fields": {
+     "enabled": false,
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "$proto": "Widget",
+        "fields": {
+         "enabled": false
+        }
+       }
+      }
+     }
+    }
+   }
+  ]
+ }
+]

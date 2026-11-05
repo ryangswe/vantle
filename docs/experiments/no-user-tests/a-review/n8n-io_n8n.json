@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "n8n-io_n8n", "rank": 1, "function": "HubspotV2.execute",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": false, "usable": false,
+    "category": "too-big", "alsoCategories": ["not-charted-dominates", "not-a-decision"],
+    "evidence": "nodes/Hubspot/V2/HubspotV2.node.ts:1051 is a 2,084-line execute() that dispatches on 7 resources × ~33 operations; the chart has 838 boxes (paths capped at 100000), with only 3 outcomes ([returnData] at :3133 and throws at :1705 and :2644). The root `resource === 'contactList'` goes straight to [returnData], because every API-request branch (e.g. :1062–1098) ends the same way and sits among 261 not-charted effects. A spot check found no wrong arrow, but at this size it couldn't be checked fully.",
+    "fixHint": "Refuse or split charts over the box limit (e.g. one chart per resource/operation branch), and stop multiplying shared tail checks per branch; for handler-dispatch functions, chart the dispatch as a switch over which request is made rather than only the paths to throws."
+  },
+  {
+    "repo": "n8n-io_n8n", "rank": 2, "function": "HubspotV1.execute",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": false, "usable": false,
+    "category": "too-big", "alsoCategories": ["not-charted-dominates", "not-a-decision"],
+    "evidence": "nodes/Hubspot/V1/HubspotV1.node.ts:840 is the V1 twin of rank 1 (1,807 lines): 716 boxes, 2 outcomes ([returnData] at :2645 and one throw at :2205), and 249 not-charted effects holding every API call. Not checked arrow by arrow.",
+    "fixHint": "Same as rank 1: enforce a size cap or split per branch, and represent the resource/operation dispatch instead of only the throw paths."
+  },
+  {
+    "repo": "n8n-io_n8n", "rank": 3, "function": "Salesforce.execute",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": false, "usable": false,
+    "category": "too-big", "alsoCategories": ["not-charted-dominates", "not-a-decision"],
+    "evidence": "nodes/Salesforce/Salesforce.node.ts:1040 is a 2,161-line per-item loop dispatching on 13 resources: 224 boxes, 4 outcomes ([returnData] at :3199 and throws at :1174, :2945, :2981), and 435 not-charted entries (417 effects, 18 catch blocks). The work of each resource/operation sits in the not-charted effects. Not checked arrow by arrow.",
+    "fixHint": "Same as rank 1; also ranking: scan should down-rank or flag huge dispatch functions whose boxes mostly guard side effects."
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "repo": "formbricks_formbricks",
+    "rank": 3,
+    "function": "processSingleFilter",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": ["missing-check"],
+    "deadArrowOnly": false,
+    "evidence": "The dispatch on root.type (prisma-query.ts:457-475) and the inlined attribute/date/number/string, person, device and survey-interaction builders (:51-384) are drawn correctly, except for dead arrows. n22 (:139) and n57 (person copy) draw `default -> {}`, but n32/n67 (:262) already established that the operator is one of the four number operators. n16 and n52 (:60) draw `other` to the empty-condition outcome, but n35/n34/n33 (:234/:238/:257) leave only the six date operators. Not dead-only: buildSegmentFilterWhereClause is collapsed to outcome n78 (recursive), but it isn't listed under not charted, although it can throw: getSegment throws ResourceNotFoundError (segments.ts:105) and runs validateInputs (segments.ts:95). Its checks for circular references and for a segment from another workspace (:398, :417) aren't drawn either; that is allowed for a collapsed box.",
+    "fixHint": "Narrow a switch drawn after an `includes([...])` or a membership check to the values left, and drop its default/other arrow when none are left. List a helper collapsed for recursion under not charted when it can throw (here through a reactCache-wrapped callee). The six date outcomes have the same label though dateCondition differs; show the condition each one carries."
+  }
+]

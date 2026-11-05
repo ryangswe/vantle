@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "better-auth_better-auth",
+    "rank": 1,
+    "function": "resolveBaseURL",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Traced all three entry branches against url.ts:451-486. Dynamic config: host found / allowedHosts match / fallback / the two throws (406-437), and the fallback-or-getBaseURL path when there is no source (467-476). Static config: string url, env, trusted proxy headers, request origin with the 'Could not get origin' throw, window, undefined (149-193). withPath is inlined correctly at every use (assertHasProtocol throw at 56, checkHasPath, basePath trimming at 83). The try/catch at 174-176 that swallows withPath errors on the proxy-header path, the assertHasProtocol catch (60) and checkHasPath's throw are all named in not charted. Nothing reachable is missing or misdirected. Two flaws: n42/n43 are a dead branch (request is `undefined` there), and labels like `isRequestLike(source) ? source : undefined?.headers.get(...)` lose their parentheses.",
+    "fixHint": "Drop the infeasible branches where a variable is a constant `undefined` (n42/n43, n28-n32), parenthesise substituted ternaries in labels, and share the repeated withPath subcharts instead of drawing them once per caller (that would also take the chart well under the 50-box cap it sits on)."
+  }
+]

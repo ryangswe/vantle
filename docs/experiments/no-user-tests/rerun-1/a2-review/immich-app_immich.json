@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "immich-app_immich",
+    "rank": 1,
+    "function": "checkAccess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The arrows match utils/access.ts: the empty-set guard (103), the sharedLink split (107), the shared-link switch with its allowDownload/allowUpload gates (119-151), and the 29-way checkOtherAccess permission switch (157-427), with identical-body cases merged correctly. Hard to read: every label has the argument object literal pasted in for `request` (e.g. `{ auth, permission, ids: (Array.isArray(ids) ? new Set(ids) : ids) }.ids.has(...)`). 25 of the 30 boxes are inlined repository `ids.size === 0` guards that can't be reached after the line-103 guard. Outcomes are raw Kysely chains, and AlbumRead and AlbumUpdate show identical `isOwner.union(isShared)` labels although they differ by Viewer/Editor role (241-266).",
+    "fixHint": "When inlining, bind a destructured or object-literal argument to the parameter name instead of pasting the literal into each reference. Prune inlined guards that an earlier check on the same value already decides. Keep a repository method's call as the outcome label instead of expanding its query body."
+  },
+  {
+    "repo": "immich-app_immich",
+    "rank": 2,
+    "function": "BaseService.checkAccess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "services/base.service.ts:313 only forwards to checkAccess(this.accessRepository, request), so this is the rank-1 chart again with `this.accessRepository` in the outcome labels. It's just as faithful (arrows verified against utils/access.ts:98-427) and has the same readability problems: pasted object literals, 25 unreachable size guards and raw SQL outcomes. The decision it shows is the one the call returns, so it passes. But it's a duplicate a user would not chart separately.",
+    "fixHint": "In scan, collapse or skip pure one-call forwarders whose chart equals the callee's, so the top rows aren't duplicates. Same label fixes as rank 1."
+  },
+  {
+    "repo": "immich-app_immich",
+    "rank": 3,
+    "function": "checkOtherAccess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "All 29 permission groups in the n48 switch match the cases in utils/access.ts:157-427, including the merged identical-body groups. The default goes to the empty set, the AssetUpload/ArchiveRead/TimelineDownload `ids.has(auth.user.id)` checks are right, and the inlined repository `ids.size === 0` guards (access.repository.ts, e.g. :54, :78, :189) are real here. Caveats: 19 of the 21 boxes are those trivial guards. Outcome labels are raw Kysely chains. AlbumRead/AlbumDownload and the four Editor-role album permissions have identical `union(isShared)` labels although the role differs (241-300).",
+    "fixHint": "Keep the repository method call as the outcome label instead of its query body. Show the argument that distinguishes outcomes whose labels are otherwise identical (AlbumUserRole.Viewer vs Editor). Consider folding the trivial empty-input guards of inlined helpers."
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "name": "vantle",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Turn the decision logic hidden in code into flowcharts anyone can read, checked against the real code.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "vantle": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.137.0",
+    "commander": "^15.0.0",
+    "ts-morph": "^28.0.0",
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "repo": "launchdarkly_js-core",
+    "rank": 1,
+    "function": "validateFileOverrideSourceOptions",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Every check and throw in createOverrideSource.ts:40-150 is drawn with the right arrows (paths throw 41-45, duplicateKeysHandling 57-58, changeDetection throw 72-78, pollInterval ladder 82-113, yamlParser 122-124, YAML throw 136); the dedup warning (50) is listed. One dead arrow: on the n7 'TypeValidators.Function.is(options.yamlParser)' yes path (123), the step sets yamlParser to a function (typeof === 'function', common/src/validators.ts:131), so `!yamlParser` is false and n4 `yamlPath !== undefined && !yamlParser` (136) can't take its 'yes' (throw) arrow there; the chart draws it.",
+    "fixHint": "Carry a type-guard fact (yamlParser is a function, hence truthy) through the step and prune the decided arrow of the later shared check, or split n4 per incoming branch."
+  }
+]

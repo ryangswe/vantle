@@ -1,0 +1,98 @@
+[
+ {
+  "each": [
+   [
+    "ui",
+    "flags",
+    "assets",
+    "api"
+   ],
+   [
+    "/x",
+    ""
+   ]
+  ],
+  "this": [
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": true
+     },
+     "eu",
+     true
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": true
+     },
+     "eu",
+     false
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": true
+     },
+     "custom",
+     true
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": true
+     },
+     "custom",
+     false
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": false
+     },
+     "eu",
+     true
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": false
+     },
+     "eu",
+     false
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": false
+     },
+     "custom",
+     true
+    ]
+   },
+   {
+    "$new": "Router",
+    "args": [
+     {
+      "rewriteRequestPath": false
+     },
+     "custom",
+     false
+    ]
+   }
+  ]
+ }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "launchdarkly_js-core", "rank": 1, "function": "validateFileOverrideSourceOptions",
+    "mechanical": true, "faithful": true, "mainDecision": true, "readable": true, "usable": true,
+    "category": "none", "alsoCategories": [],
+    "evidence": "Every throw (paths, changeDetection, YAML with no parser) and every defaulting branch (duplicateKeysHandling, the four pollInterval cases, yamlParser) routes as in src/overrides/createOverrideSource.ts:41-149. The step boxes carry the chosen values into the return. The duplicate-path warning (:50) and the paths callback are listed as not charted. Validating options is the function's purpose.",
+    "fixHint": ""
+  },
+  {
+    "repo": "launchdarkly_js-core", "rank": 2, "function": "validateMeasurement",
+    "mechanical": true, "faithful": true, "mainDecision": true, "readable": true, "usable": true,
+    "category": "none", "alsoCategories": [],
+    "evidence": "The key check, then the latency, error, consistency and invoked branches with inlined areValidNumbers/areValidBooleans, all match src/MigrationOpEventConversion.ts:68-142. The shared boolean-check boxes and the shared return box are merged correctly, and an unsupported key falls to undefined.",
+    "fixHint": ""
+  },
+  {
+    "repo": "launchdarkly_js-core", "rank": 3, "function": "MigrationOpEventToInputEvent",
+    "mechanical": true, "faithful": true, "mainDecision": true, "readable": true, "usable": true,
+    "category": "none", "alsoCategories": [],
+    "evidence": "kind, isOperation (inlined), creationDate, the context/contextKeys branches, the samplingRatio check and validateEvaluation all route as in src/MigrationOpEventConversion.ts:219-277. The contextKeys callback is listed as not charted. Minor: the `!context && !contextKeys` check (:253) is drawn three times with both arms, though each path already fixes its value.",
+    "fixHint": "Optional: fold a check whose operands an earlier branch has already set (contextKeysOrContext.context assigned on this path)."
+  }
+]

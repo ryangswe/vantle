@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "medusajs_medusa",
+    "rank": 1,
+    "function": "prepareLineItemData",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["not-a-decision"],
+    "evidence": "Both validation throws (prepare-line-item-data.ts:95,102) and the isCustomPrice/taxLines/adjustments/cartId presence branches (176-190) are drawn with correct arrows. But the sale-price `if` at line 115 is missing and not listed (not charted is empty). That `if` sets compareAtUnitPrice to the original amount when a SALE price list lowers the price, and the returned lineItem.compare_at_unit_price (line 170) depends on it. The requires_shipping ternary (136-138) is also not drawn. Those two are the function's real business decisions. What's left is input validation plus 'copy optional field if present' plumbing. Small label issue: the outcome on the all-no path reads 'lineItem (changed)' when nothing changed.",
+    "fixHint": "An `if` whose branch assigns a local that later feeds the returned value (compareAtUnitPrice → lineItem initializer) must be drawn, with a step box like 'compareAtUnitPrice changed (line 123)', or listed under not charted. It must never be dropped silently. Consider drawing (or listing) a `?:` that decides a field of the returned object, such as requiresShipping."
+  }
+]

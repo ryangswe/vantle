@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "outline_outline",
+    "rank": 1,
+    "function": "documentUpdater",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Dead arrow: on the publish branch (n15 `publish && cId` yes -> n10/n11 -> n9) the shared box n9 `publish || document.collection !== collection` still draws its `no -> document` arrow, but publish is already truthy there, so server/commands/documentUpdater.ts:183 always reloads via findByPk (line 184) on that path. Every other arrow is right: the 9 property setters (78-104), the lock/DocumentConflictError (120-134), the deprecatedReason branch with its ValidationError and two `return document` outcomes (137-149), the publish/save branches (162-170), with `if (done)` (171) properly listed as not charted. Cosmetic only: the step `user = ...; cId = ...` (lines 74-76) is drawn between the color and editorVersion checks, and the `collection = document.collection` step (153) is missing on the transaction-yes chain (n18->n17->n16).",
+    "fixHint": "Carry facts set by an earlier check along each path into shared boxes (here: after `publish && cId` is yes, `publish` is truthy) and drop or split arrows those facts decide. Also put step boxes at their source position and on every chain."
+  },
+  {
+    "repo": "outline_outline",
+    "rank": 2,
+    "function": "WebsocketsProcessor.perform",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": true,
+    "evidence": "A 40-case `switch (event.name)` (server/queues/processors/WebsocketsProcessor.ts:43-1031) that only routes socket.io broadcasts. Each case is a not-found guard and an emit, so the function makes no decision of its own. The real work (rooms, joins and leaves, the batched loops in groups.* at 545-569, 767-797, 822-856, 875-924) is side effects, and about a dozen cases go straight to `undefined`. One dead arrow: the switch edge into n9 carries documents.create, publish and restore together, so n8 `event.name === \"documents.create\" && ...` (line 85) yes is drawn on the publish/restore paths, where it can't be true. Apart from that, the branches match the source. The outcome labels are huge: n12 repeats the `Promise.all` five times.",
+    "fixHint": "Have scan demote switch-dispatch functions whose cases are guard plus side effect. Split shared switch edges, or pass the case value into later `event.name ===` checks. Hoist awaited expressions that repeat in labels into named variables."
+  },
+  {
+    "repo": "outline_outline",
+    "rank": 3,
+    "function": "handlePaste",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": false,
+    "evidence": "Real wrong arrow: n3 `stores.collections.actions.includes(RPCAction.Info)` no -> `throw new Error(Cannot fetch ...)` comes from the inlined Store.fetch (app/stores/base/Store.ts:482-483), which is `async` (line 477). Its throw becomes a rejected promise, which `.catch` handles at app/editor/extensions/PasteHandler.tsx:219-224 (insertLink), so handlePaste returns true and never throws. There are also dead arrows from constant arguments: isInCode is called with `{ inclusive: true }` (line 85), so the n30 `onlyMark` yes and n27 `onlyBlock` yes arrows can't run (shared/editor/queries/isInCode.ts:28,43). isUrl is called with no options (line 118), so requireProtocol=true makes the n20 yes arrow dead (urls.ts:118), and requireHttps=undefined makes the n15 yes arrow dead (urls.ts:134). And n24 `this.shiftKey` yes -> n9 makes n9's no arrow dead, because n9 contains `|| this.shiftKey` (line 278). The rest matches: the code-block, pm-slice/Claude, URL, selection, document/collection link, vscode code and markdown branches. Not counted: an unlisted `JSON.parse(vscode)` throw (line 94).",
+    "fixHint": "Treat a throw inside an `async` callee as a rejection, not a throw out of the caller, and follow it into the caller's `.catch`/`await` handling. Constant-fold literal and default arguments of inlined helpers so their dead branches drop."
+  }
+]

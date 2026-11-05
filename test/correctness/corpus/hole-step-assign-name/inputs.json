@@ -1,0 +1,32 @@
+[
+ {
+  "each": [
+   [
+    "a",
+    "b"
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    false
+   ],
+   [
+    false
+   ],
+   [
+    false
+   ],
+   [
+    "a",
+    "b",
+    "x"
+   ]
+  ]
+ }
+]

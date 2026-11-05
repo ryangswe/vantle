@@ -1,0 +1,20 @@
+[
+ {
+  "each": [
+   [
+    {
+     "admin": true,
+     "plan": "p"
+    },
+    {
+     "admin": false,
+     "plan": "p"
+    }
+   ],
+   [
+    true,
+    false
+   ]
+  ]
+ }
+]

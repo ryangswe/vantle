@@ -1,0 +1,1 @@
+A helper with a loop, inlined twice. With p = false and a = [], the first call's loop runs zero times, so the run can't be judged; the result comes from the second call's `return 'early'`, which is written before the loop. The check must call that unjudged (loop), not a wrong chart. From the correctness check's own code review.

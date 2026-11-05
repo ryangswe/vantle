@@ -1,0 +1,172 @@
+[
+ {
+  "each": [
+   [
+    {
+     "id": "i1",
+     "live": true,
+     "shelf": "s1",
+     "dirty": {
+      "$fn": true
+     },
+     "refresh": {
+      "$fn": {
+       "$async": {
+        "$undefined": true
+       }
+      }
+     }
+    },
+    {
+     "id": "i1",
+     "live": true,
+     "shelf": "s1",
+     "dirty": {
+      "$fn": false
+     },
+     "refresh": {
+      "$fn": {
+       "$async": {
+        "$undefined": true
+       }
+      }
+     }
+    },
+    {
+     "id": "i1",
+     "live": false,
+     "shelf": "s1",
+     "dirty": {
+      "$fn": true
+     },
+     "refresh": {
+      "$fn": {
+       "$async": {
+        "$undefined": true
+       }
+      }
+     }
+    },
+    {
+     "id": "i1",
+     "live": false,
+     "shelf": "s1",
+     "dirty": {
+      "$fn": false
+     },
+     "refresh": {
+      "$fn": {
+       "$async": {
+        "$undefined": true
+       }
+      }
+     }
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    1
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    0,
+    4
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    }
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    "body"
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    false,
+    true
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    3
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    "note"
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    true
+   ]
+  ],
+  "globals": {
+   "reserve": [
+    {
+     "$fn": {
+      "$async": null
+     }
+    },
+    {
+     "$fn": {
+      "$async": "row"
+     }
+    }
+   ],
+   "rewrite": [
+    {
+     "$fn": {
+      "id": "i2",
+      "live": false,
+      "shelf": "s2",
+      "dirty": {
+       "$fn": false
+      },
+      "refresh": {
+       "$fn": {
+        "$async": {
+         "$undefined": true
+        }
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+]

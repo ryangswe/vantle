@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "unkeyed_unkey",
+    "rank": 3,
+    "function": "encodeDeepObjectObject",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-charted-dominates",
+    "alsoCategories": ["not-a-decision"],
+    "evidence": "Every arrow matches the code. value == null → undefined (encodings.ts:250). The inlined isPlainObject checks (primitives.ts:155-162) go to the EncodingError throw (encodings.ts:261) or on to out.slice(1). The catch at primitives.ts:163 is listed. All of the encoding logic, though, lives in the Object.entries(...).forEach callback (encodings.ts:264-285), which is listed as not charted: skipping nulls, recursing into nested objects, expanding arrays. So the chart is only the argument check around the decision.",
+    "fixHint": "Draw the inside of a forEach/for-of body as a per-item sub-chart (skip null → recurse if object → expand array), or at least as a loop group. Otherwise scan should down-rank a function whose only drawn checks are argument validation in front of a listed callback."
+  }
+]

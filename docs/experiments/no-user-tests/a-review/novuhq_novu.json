@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "novuhq_novu",
+    "rank": 1,
+    "function": "HumanInteractionInboundService.tryHandleAction",
+    "mechanical": false,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "long-labels",
+    "alsoCategories": [],
+    "evidence": "All arrows check out against human-interaction-inbound.service.ts:71-147, 196-256, 548-653 (isAddressedHuman/respondsAsDeliveredPlatformUser/consumeNonPending inlined correctly), and the routing of a clicked action is the function's real decision. It fails criterion 3 (87.5% short, longest 342 chars) because locals are replaced by their initialisers: `current` becomes `await this.settlement.expireIfOverdue(interaction)` and `latest` becomes `await this.humanInteractionRepository.findByIdentifier(..., await this.settlement.expireIfOverdue(interaction).identifier)` (lines 111, 138, 226, 244). isAddressedHuman's subtree is drawn twice, so it's hard to read.",
+    "fixHint": "Keep a local's name (`current.status`, `latest`) in box labels instead of substituting its initialiser expression, or cap substitution length. Share one subgraph for a helper inlined from two call sites when the continuations are identical."
+  },
+  {
+    "repo": "novuhq_novu",
+    "rank": 2,
+    "function": "AgentInboundHandler.isExistingConversationEventBlocked",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Gate order matches inbound-turn.handler.ts:2051-2064: mention gate (requires-explicit-mention.ts:69-87), then plan limit (plan-limit-gate.service.ts:150-164), then keyless stop (inbound-turn.handler.ts:1032-1066, with isSignupCtaPosted inlined). Every arrow is correct, and the postCard checks that only post a card are listed as not charted. One box (n11, 615 chars) repeats `await this.buildMentionContext(...)` four times in place of `mentionContext`, and the keyless subtree is duplicated for the no-mention path.",
+    "fixHint": "Same label substitution issue as rank 1 (keep `mentionContext`). Otherwise fine."
+  },
+  {
+    "repo": "novuhq_novu",
+    "rank": 3,
+    "function": "AddAgentIntegration.execute",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The chart leaves out five guards that throw and so change the result, and none of them is listed as not charted: assertNotProductionEnvironment (add-agent-integration.usecase.ts:58, def 345-353, Forbidden in prod), assertHumanRelay (:82, :187, def 307-311), enforceEmailTier (:188, :194, def 293-305, 402), enforceSingletonEmail (:189, :195, def 313-343, Conflict) and assertWebChatEnabledForConnect (:136). The ones in linkExistingIntegration show up only as opaque 'this changed (line 190/196)' step boxes. The arrows that are drawn are correct, and they follow the provider routing at :60-166 and createLink at :217-233.",
+    "fixHint": "Inline same-class void helpers that are called as statements (assert*/enforce*) when they contain `throw`, or at least list them as not charted ('call may throw'). Never fold a throwing call into a 'this changed' step box."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 1,
+    "function": "orderProcess.onTransitionStart",
+    "mechanical": false,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "too-big",
+    "alsoCategories": [],
+    "evidence": "Every guard and arrow matches config/order/default-order-process.ts:265-455, the order state-transition guard, which is a clear decision. Not-charted correctly lists the every/some callbacks (:272, :278), the stock-lock effect (:372) and the per-line stock check (:385). It has 60 boxes (over 50) only because the checks after :403, :407, :414 and :418 are re-drawn for each combination of 'order changed (line 296/341/404)' step state. The checkPaymentsCoverTotal block (n33/n38/n51/n61/n66/n77) appears six times, though about 35 distinct checks would cover the function.",
+    "fixHint": "Don't fork the graph on side-effect-only state (`order changed at line N`) when the later checks don't read that state differently. Merge structurally identical downstream subgraphs (hash-cons) before counting boxes."
+  },
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 2,
+    "function": "OrderModifier.modifyOrder",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every early return and throw is drawn on correct arrows (service/helpers/order-modifier/order-modifier.ts:419-741): state, no-changes, negative quantity, item limit, insufficient stock (add and adjust loops), missing line, coupon validation, setShippingMethods error, dryRun, missing refund paymentId and refund failure. The mutation work (cancel vs update at :516, refund line accrual, surcharges, addresses) is listed as not charted. Hard to read: action boxes list internal variables ('modification changed; this changed; …'), there's a constant-folded `row.quantity < row.quantity` box (n44), and the coupon subtrees are duplicated. :516 is drawn as n40 even though not-charted says it isn't.",
+    "fixHint": "Drop or summarise 'X changed' step boxes. Prune always-false constant checks. Keep the not-charted list consistent with drawn boxes."
+  },
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 3,
+    "function": "PaymentService.resolveRefundTargets",
+    "mechanical": false,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["long-labels"],
+    "evidence": "The same-class guard this.assertPaymentIsSettled (service/services/payment.service.ts:547 and :593, def :795-798) throws for unsettled payments and isn't drawn or listed (not-charted is empty). The refundablePayments filter loop (:602-615: fully refunded or unavailable-destination payments are skipped) decides refundMax (n18) and whether a payment is found (n17), and is also neither drawn nor listed. It also fails criterion 3 (86.7% short) because `payment` and `capacity` are replaced by `orderWithRefunds.payments.find(p => idsAreEqual(...))`.",
+    "fixHint": "Inline or list same-class assert helpers that throw. List loops whose `continue` filters feed a later check as not charted. Keep local names in labels."
+  }
+]

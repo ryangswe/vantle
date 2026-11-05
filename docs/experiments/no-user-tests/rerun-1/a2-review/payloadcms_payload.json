@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "payloadcms_payload",
+    "rank": 2,
+    "function": "checkFileRestrictions",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [
+      "missing-check"
+    ],
+    "evidence": "The order of checks matches checkFileRestrictions.ts:103-276 on every copy, but the step boxes merge paths with different state. 'errors changed (line 256)' (n29, n42, n55, n73) feeds a box that says `errors = []` (n28, n41, n54, n72). 'errors changed (line 194)' (n33) reaches n22/n23, which also say `errors = []`. Since the final `errors.length > 0` throw (n5, :269) is the decision, the chart says a restricted or corrupt ISO file is back to no errors. Also missing and not listed: the `configMimeTypes.length ? validateMimeType : !RESTRICTED.some` ternary behind box `isAllowed?` (:104-109), and the ValidationError thrown by getFileBuffer when the temp file can't be read (:138-141), reached from n13/n19.",
+    "fixHint": "A step box must show only what its own branch set. Don't merge changed and unchanged paths into one box labelled with the unchanged state, and give each path its own state when the labels differ. Expand or list a local's conditional initializer when that local is drawn as a box. Treat a local closure that throws, called inside a condition, like a statement helper (draw its throw or list it). Readable: no, at 48 boxes it's four near-copies of the same post-SVG pipeline, and some step boxes have nine assignments."
+  }
+]

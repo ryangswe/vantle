@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 1,
+    "function": "PostHog.capture",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "evidence": "The drop decisions are right: init guard (src/posthog-core.ts:1774), inlined is_capturing (5075-5085), event name (1784), $snapshot cookieless (1790), bot (1799), rate limit (1807) and before_send (1999-2002) all reach `undefined`, and every other path reaches `data`. But the chart redraws `save_campaign_params || save_referrer` (1839) as a two-way check after 1832 and 1835 have already decided it. The box after both 'no' answers (N104, with no code between) has a 'yes' arrow to a step box saying set_initial_person_info ran (1840), which no execution takes. Three more copies (after 1832/1835 yes) carry a 'no' that only an unseen config mutation could allow. That drawing grows the bot-pageview check (1855) into 7 copies and the box count to 49.",
+    "fixHint": "Carry decided condition values forward: a repeated condition over unchanged reads (this.config.*) should resolve, not fork. Then merge the identical downstream subgraphs, so the chart drops to about 15 checks."
+  },
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 3,
+    "function": "PostHog._init",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [],
+    "evidence": "Arrows match src/posthog-core.ts:845-1134: empty token (846) and __loaded (853) return `this`, and the bootstrap identify/warn/register chain (1014-1061), the cookieless/distinct-id registration (1063-1071) and segment-vs-_loaded (1106) are drawn correctly. Untraceable effects, identify's throws and _loaded's catch are listed. But _init always returns `this`. It's an initializer whose checks only choose setup side effects (person-profile config, deferred extensions, identity registration), so there's no decision to chart.",
+    "fixHint": "scan should rank initializers that always return the same value (`this`) below real decision functions."
+  }
+]

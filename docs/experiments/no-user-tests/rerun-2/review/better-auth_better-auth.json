@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "better-auth_better-auth",
+    "rank": 1,
+    "function": "resolveBaseURL",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "The routing is right. isDynamicBaseURLConfig → source → resolveDynamicBaseURL (host / isAllowed / fallback / throws, url.ts:404-437) → fallback → getBaseURL(undefined, …) (url.ts:458-476). Then string config → getBaseURL(config, …) or getBaseURL(undefined, …) (url.ts:480-485), with withPath's checkHasPath and basePath checks inlined correctly (url.ts:73-89), and getBaseURL's constant `if (url)` and `if (request)` elided where url/request are literal undefined. The one dead arrow is in the dynamic-config, no-source, no-fallback path: getBaseURL is called with request = undefined (url.ts:470-476). So n35 `undefined?.headers.get(\"x-forwarded-host\") && undefined?.headers.get(\"x-forwarded-proto\") && trustedProxyHeaders?` is always false, and its yes arrow (→ n34 → n26/n25 → n22-n24) can't be taken (url.ts:167-169). The substituted value is in the label, but the condition isn't folded. Label nit: n50/n55 render `request.url` as `isRequestLike(source) ? source : undefined.url`, which is missing parentheses and reads as `undefined.url`.",
+    "fixHint": "Fold conditions that become constant after argument substitution (`undefined?.x && …` is false) and drop their unreachable subtrees. Parenthesize substituted expressions before member access in labels."
+  },
+  {
+    "repo": "better-auth_better-auth",
+    "rank": 2,
+    "function": "handleOAuthUserInfo",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "The three-way flow is drawn correctly: orphaned / link-new-account / existing-linked / register (link-account.ts:205-589), along with the try/catch isAPIError routing (:350-358, :578-587), the inlined assertValidUserInfo and getCurrentSecret throws, and email-verification and session checks (:590-654). Missing and not listed: parseAdditionalUserInputFromProviderProfile is in scope but drawn only as a step box (n20, and inside n73/n74). Its parseInputData throws APIErrors, MISSING_FIELD for a required additional field absent from the profile on create (db/schema.ts:206-211) and VALIDATION_ERROR (db/schema.ts:180-185). Those change the outcome at :474 (propagates) and :527 (caught, rethrown as APIError via n72). Dead arrows from step merging: n26 `opts.selectedUser?` (:376) then n23 `opts.selectedUser?` (:462). On the n26-no → n24 path, n23 → yes is dead, and on the link path via n25, n23 → no is dead. n4/n72 `isAPIError(e)?` → no is dead when entered from the APIError throws (n35/n37-n40 at :340, validate-user-info.ts:12-66; n79 at :568). Step boxes n24/n25/n45/n73/n74 hold whole-function assignment dumps (labels up to 2048 chars).",
+    "fixHint": "Follow helpers into the functions they call (parseInputData), or list a scoped helper's uninlined callees that can throw under not charted. Track a check already decided on a path (selectedUser, error type) so the step-merged copy doesn't offer the other arrow. Cap step-box labels to the variables the branch changed."
+  },
+  {
+    "repo": "better-auth_better-auth",
+    "rank": 3,
+    "function": "toOpenApiSchema",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "deadArrowOnly": false,
+    "evidence": "The instanceof chain matches generator.ts:574-726 in order. ZodObject without shape correctly falls through to the ZodRecord check (:590-615). The intersection merge and fallback to allOf is right (:637-651). The union length 0/1/`!schema`/many branches are right (:661-675). addNullType (:184-199) and withDescription (:176-182) are inlined correctly, and recursion is one box as warned. The n22 `schemas[0]?` → no arrow can't be taken after length===1, but that defensive check is written in the function itself, so the chart mirrors the source. Value-level ternaries are hidden inside the outcome names: `def.inclusive === false` picks oneOf vs anyOf inside `unionSchema` (:671-674), and the ZodString constraints sit inside `baseSchema` (:721). These are acceptable abstractions, not wrong arrows. The 13 repeated `getZodDescription(zodType)?` boxes are noise.",
+    "fixHint": "Optional: collapse a trivially inlined helper that repeats on every branch (withDescription) into one box per outcome, to cut noise."
+  }
+]

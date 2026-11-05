@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 1,
+    "function": "orderProcess.onTransitionStart",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Every guard and its refusal message matches src/config/order/default-order-process.ts:266-454, including the ArrangingPayment block (321-405), where the inlined applyPriceAdjustments tax-zone throw, the getOrderOrThrow EntityNotFoundError and the global-settings throw appear as outcomes. The only problems are dead arrows: (a) after the first applyPriceAdjustments (step n49, line 341) sets `order.currencyCode = ctx.currencyCode` (order.service.ts:2498), n36 `ctx.currencyCode !== order.currencyCode` yes can't run on the second call (line 404). (b) n48 no -> ... -> n37 yes: the same condition `arrangingPaymentRequiresShipping && order.shippingLines?.length` (345 vs 403), with nothing in between changing shippingLines. (c) toState chains: n66 yes (toState ArrangingAdditionalPayment) -> ... -> n56 `toState === 'ArrangingPayment'` yes; n62 yes (fromState ArrangingAdditionalPayment) -> n59 no -> n58 yes, which needs fromState AddingItems; n30 yes -> n28 PaymentSettled yes; n23 yes -> n21 Shipped yes, and so on. Not counted: the loop step n40 `variantsWithInsufficientSaleableStock = []` (line 378) is misleading on later iterations but arrows are right; ProductPriceApplicator's own no-active-tax-zone throw (product-price-applicator.ts:85-86) is unlisted but gives the same error as the drawn n33.",
+    "fixHint": "Carry facts from earlier checks and steps along each path (toState/fromState equalities, the `order.currencyCode` assignment) and prune or split shared-box arrows they decide. Step labels inside a one-pass loop shouldn't claim the loop's initial value."
+  },
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 2,
+    "function": "OrderModifier.modifyOrder",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "other",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "Wrong condition: n16 reads `(order.totalWithTax - order.totalWithTax) < 0`, which is always false, but the code is `delta = newTotalWithTax - initialTotalWithTax` (src/service/helpers/order-modifier/order-modifier.ts:697-699). initialTotalWithTax was captured at line 417, before the order was modified. Vantle replaced the snapshot variable with the live expression, so the refund branch (RefundPaymentIdMissingError, the createRefund throw) looks unreachable. A dead arrow too: on the n45-no path, correctedQuantity = quantity (line 490), so n43 `row.quantity < row.quantity` yes -> InsufficientStockError (n42) can't run. Otherwise right: the state and no-changes guards (419-424), the add/adjust loop guards with their limit, stock and negative-quantity errors and throws (444-545), the country throws, coupon and shipping error results, the tax-zone throw and dryRun (581-694).",
+    "fixHint": "Don't substitute a variable's initializer into later checks when the source object is mutated in between (`const x = order.totalWithTax` then `order` changed): keep the name `initialTotalWithTax`. Prune arrows a step box already decides (`correctedQuantity = quantity`)."
+  },
+  {
+    "repo": "vendure-ecommerce_vendure",
+    "rank": 3,
+    "function": "PaymentService.resolveRefundTargets",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "The for loop at src/service/services/payment.service.ts:602-615 is missing. It is not drawn, not listed (notCharted is empty) and has no loop warning. Its `continue` checks decide refundablePayments: fully refunded payments are skipped (603), and with a strategy, so are payments that aren't Settled or available (608-611). That decides n20 `strategy && refundMax < total` -> RefundAmountError (617-618) and which payment n19 finds (624-630). Dead arrow: n24 `strategy` no -> n20, whose yes arrow needs `strategy` to be truthy. The explicit-targets branch (534-567), the destination, amount and settled checks (570-597) and the throws match.",
+    "fixHint": "Loops that build a collection with `continue` filters must be drawn, or at least listed under not charted, when a later check reads the collection or a value derived from it. Also carry the `strategy` falsy fact into n20."
+  }
+]

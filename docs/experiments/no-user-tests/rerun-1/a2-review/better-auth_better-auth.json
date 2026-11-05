@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "better-auth_better-auth",
+    "rank": 1,
+    "function": "resolveBaseURL",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Traced every path in src/utils/url.ts:451-486 through resolveDynamicBaseURL (398-438), getBaseURL (142-194), withPath (73-89) and the inlined assertHasProtocol throw (55-58). Dynamic/static, source, fallback, allowedHosts, env, proxy headers, request origin and window branches all go where the code does. The swallowed throws (assertHasProtocol catch at 60, checkHasPath at 76, the empty catch at 176) are listed.",
+    "fixHint": "Readability only: substitute `request = undefined` before drawing, so impossible checks like `undefined?.headers.get(...) && \u2026` (n43) are pruned. Parenthesise substituted ternaries (`isRequestLike(source) ? source : undefined?.headers\u2026` reads with the wrong precedence). Share one withPath subgraph per URL expression instead of drawing it 8 times."
+  }
+]

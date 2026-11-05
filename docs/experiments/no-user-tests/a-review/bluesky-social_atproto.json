@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "bluesky-social_atproto", "rank": 1, "function": "main",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": true, "usable": false,
+    "category": "not-a-decision", "alsoCategories": ["extraction-error"],
+    "evidence": "services/ozone/api.ts:18 is service bootstrap: it reads env, builds invalidators and starts the server. The chart has 0 boxes, and its 4 ifs (bunnyAccessKey, cfDistributionId, migrate, metricsPort) are all side effects, correctly listed as not charted. services/ozone (3 files) was reached only because all 55 larger packages in summary.json `tried` failed with 'tsconfig loads no source files'.",
+    "fixHint": "Load solution-style tsconfigs (`\"include\": []` plus `references`) by following references to e.g. tsconfig.build.json; then the package rule would land on packages/bsky or packages/pds."
+  },
+  {
+    "repo": "bluesky-social_atproto", "rank": 2, "function": "main",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": true, "usable": false,
+    "category": "not-a-decision", "alsoCategories": ["extraction-error"],
+    "evidence": "services/ozone/daemon.ts:11 is daemon startup glue. The chart has 0 boxes, and its 2 ifs (daemonMetricsPort) are side effects, listed as not charted. It is a fallback package, as for rank 1.",
+    "fixHint": "Same as rank 1: follow tsconfig project references."
+  },
+  {
+    "repo": "bluesky-social_atproto", "rank": 3, "function": null,
+    "mechanical": false, "faithful": false, "mainDecision": false, "readable": false, "usable": false,
+    "category": "extraction-error", "alsoCategories": [],
+    "evidence": "No third row: services/ozone has 3 files (api.ts, daemon.ts, tracer.ts) and scan found only 2 functions. All 55 packages in summary.json `tried` (packages/bsky, packages/ozone, packages/pds, packages/oauth/oauth-provider, …) have a tsconfig.json with `\"include\": []` and only `references`, so Vantle loaded no source files from them.",
+    "fixHint": "Resolve tsconfig `references` (solution-style configs) when the root config includes no files."
+  }
+]

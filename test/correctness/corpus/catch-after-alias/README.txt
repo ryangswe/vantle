@@ -1,0 +1,1 @@
+The alias hole, followed by a listed catch the run goes through. The lost route must still fail whether or not the run enters the catch (raw = '{' or '{}'): going into a listed catch after the chart's last check excuses nothing. Fails until the alias hole is fixed. From the review of the catch fix.

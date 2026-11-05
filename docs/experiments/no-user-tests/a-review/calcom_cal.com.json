@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "calcom_cal.com",
+    "rank": 1,
+    "function": "handler",
+    "mechanical": false,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "too-big",
+    "alsoCategories": ["long-labels", "not-charted-dominates"],
+    "evidence": "RegularBookingService.ts:486 is a function of about 2,100 lines. The chart has 58 decision boxes (over 50), and only 81% of labels are short (longest 944). Every throw and return in the function is either drawn (615, 641, 647, 710, 1097, 1116, 1150, 1506, 1634, 2283, 2343, 2442, 2562) or covered by a not-charted entry (catches at 587, 623, 950, 1818), and the arrows I spot-checked are correct (612-651, 828-863, 1096-1150, 2189-2290). But 54 not-charted entries hold the real booking decision: host availability (ensureAvailableUsers at 901-975), booking and duration limits (816) and the conflict catch (1818). Labels repeat `await getEventType({...})` where the code says `eventType`.",
+    "fixHint": "Nothing local fixes a 2,100-line orchestrator. Scan should rank it below focused functions (penalise length or the not-charted ratio), or offer charting one region. Label substitution (`eventType` → `await getEventType(...)`) adds to the length and the misreading."
+  },
+  {
+    "repo": "calcom_cal.com",
+    "rank": 2,
+    "function": "dataTableFilter",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The filter-type dispatch (data-table/lib/utils.ts:135-147) and the inlined text, multi-select, number and date-range filters (:18-125) are drawn with correct arrows. That includes the negated notContains (n11: yes→false), the isEmpty short-circuit at :19, and the empty-filter pass at :65 and :118. One small gap: the number-operator switch (:95) has no default edge for the unreachable `return false` at :110, which the operator union type excludes.",
+    "fixHint": "Draw a default edge on a switch without a default case when control can fall through (or note that it is type-exhaustive)."
+  },
+  {
+    "repo": "calcom_cal.com",
+    "rank": 3,
+    "function": "preprocess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "The name-field normalisation (form-builder/schema.ts:124-175) and the inlined preprocessNameFieldDataWithVariant, getFullName and getFirstAndLastName (form-builder/utils.ts:1-50) match the code: the variant guard throws at :131, null gives '' at :142, string vs object routing at :146 and :163, and the invalid-JSON fall-through is covered by the not-charted catches at schema.ts:157 and utils.ts:37. It's readable but verbose: `parsed.data` appears as `z.object({...}).safeParse(JSON.parse(response)).data` in six boxes, and the variant subtree is drawn three times.",
+    "fixHint": "Keep local names (`parsed.data`) in labels. Merge identical inlined-helper subtrees."
+  }
+]

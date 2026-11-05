@@ -1,0 +1,48 @@
+[
+ {
+  "repo": "documenso_documenso",
+  "rank": 1,
+  "function": "signFieldWithToken",
+  "mechanical": false,
+  "faithful": false,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "missing-check",
+  "alsoCategories": [
+   "long-labels"
+  ],
+  "evidence": "The not-charted list is empty, yet assertSenderNotDisabled (sign-field-with-token.ts:96), assertRecipientNotExpired (:106; it throws RECIPIENT_EXPIRED at utils/recipients.ts:298) and validateFieldAuth (:178; it throws UNAUTHORIZED at validate-field-auth.ts:41) aren't inlined or listed. The final $transaction callback (:240-315), which has its own checks, is drawn as one outcome with a 2,676-character label. Only 87% of labels are short.",
+  "fixHint": "Inline imported assert*/validate* helpers, or list every uninlined call that can throw. Draw a $transaction(async tx => ...) callback as a sub-flow or list it as not charted; don't use its source text as an outcome label."
+ },
+ {
+  "repo": "documenso_documenso",
+  "rank": 2,
+  "function": "completeDocumentWithToken",
+  "mechanical": true,
+  "faithful": false,
+  "mainDecision": true,
+  "readable": true,
+  "usable": false,
+  "category": "missing-check",
+  "alsoCategories": [],
+  "evidence": "The guard ladder drawn (complete-document-with-token.ts:87-251, 314) has correct arrows, including the 2FA sub-checks and the derived name/email paths. But three throws are neither drawn nor listed: assertSenderNotDisabled (:94), assertRecipientNotExpired (:134; it throws RECIPIENT_EXPIRED at utils/recipients.ts:297-302), and the in-transaction updatedRecipientCount === 0 throw RECIPIENT_ALREADY_SIGNED (:343) inside the $transaction callback. The post-completion steps (next signer, seal) are listed as effects.",
+  "fixHint": "Inline imported assert* helpers (scope here is the function alone), or at least list each uninlined call that can throw. Follow, or list, the checks inside prisma.$transaction callbacks."
+ },
+ {
+  "repo": "documenso_documenso",
+  "rank": 3,
+  "function": "validateNumberField",
+  "mechanical": false,
+  "faithful": true,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "long-labels",
+  "alsoCategories": [
+   "other"
+  ],
+  "evidence": "An errors.push accumulator (advanced-fields-validation/validate-number.ts:5-65). Each check is drawn, but every outcome is just 'errors', so the chart can't say which errors a value gets. Action boxes repeat the whole destructured fieldMeta state (up to 252 characters), and the first three checks are copied three or four times (n25/n28/n32 and n29/n33). The arrows look right on inspection; n35 'no' leads into a foundRegex && ... check that can't be true.",
+  "fixHint": "For accumulator functions (push into an array, then return it), chart each check → the push it adds, as a checklist, not as path state. Leave out unchanged destructured variables from step boxes."
+ }
+]

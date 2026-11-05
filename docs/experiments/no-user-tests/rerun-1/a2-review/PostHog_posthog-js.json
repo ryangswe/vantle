@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 2,
+    "function": "RequestRouter.endpointFor",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "All arrows match src/utils/request-router.ts:150-182: path normalise (151), ui/flags/assets early returns (155-167), CUSTOM region (170) and the assets/api switch (176), each feeding an inlined _prepareEndpoint (103-137) whose ui short-circuit and rewriteRequestPath branch (104, 110) are right. The ingestion-endpoint bookkeeping (116-133) only records state and is listed; the return never depends on it.",
+    "fixHint": "Cosmetic: drop no-op step boxes ('path = path', n25/n28), and prune the re-check of target==='ui' inside _prepareEndpoint when the caller already fixed target (6 copies, half of them infeasible). n9/n17/n21 label the rewritten URL as '_prepareEndpoint(...) \u2192 rewrittenUrl' while n1/n5/n13 spell out the expression; label them the same way."
+  },
+  {
+    "repo": "PostHog_posthog-js",
+    "rank": 3,
+    "function": "PostHog._init",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [],
+    "evidence": "An initializer that always returns `this` (src/posthog-core.ts:850, 867, 1134). Its arrows are correct: token and already-loaded guards (845-868), person_profiles/process_person (877-881), cookieless (954), deferred extensions (973), identity bootstrap (1003-1061), distinct-id seeding (1063-1086), segment (1106). But every path ends in 'this', so the chart shows only which setup side effects run, as 'this changed (line 870, 871, \u2026)' steps. No helper it calls throws.",
+    "fixHint": "scan should rank down functions whose outcomes all collapse to one return value (`this`) with the branches only choosing side effects. Smaller issues: the local bindings from lines 940-952 are drawn after the line-973 branch (n18/n20), and n6 is followed by a duplicate step n5 ('line 1077')."
+  }
+]

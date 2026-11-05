@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "formbricks_formbricks",
+    "rank": 3,
+    "function": "processSingleFilter",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": false,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every arrow checks out against prisma-query.ts: the root.type switch (457), the isSet/isNotSet/date/number/string chain in buildAttributeFilterWhereClause (234-292), the date operator switch with its per-case value checks (60-107), the number path's hasUnmigratedRows/unmigratedMatchingIds returns (177-208), the device equals/notEquals/matches logic (330-354) and the survey negate (383). buildSegmentFilterWhereClause is one outcome box, and a warning says why (mutual recursion via processFilters). Hard to read: the person branch re-draws the whole attribute subtree (15 boxes), and the six date outcomes have identical labels, so you can't tell what each returns.",
+    "fixHint": "Show a reused helper subtree once and link to it, not duplicated per call site. Resolve, or mark as unknown, the variables that differ between outcomes whose labels are otherwise identical (dateCondition per date operator)."
+  }
+]

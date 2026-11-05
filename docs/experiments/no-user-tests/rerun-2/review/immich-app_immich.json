@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "immich-app_immich",
+    "rank": 1,
+    "function": "checkAccess",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Dead arrows: 22 inlined repository helpers each draw `request.ids.size === 0` with a yes arrow to the empty-set outcome (e.g. access.repository.ts:124, :190, :234, :299, :668). Every one of them receives the same `idSet` that checkAccess already tested at access.ts:103-105, so after that box's no arrow none of those yes arrows can be taken. Everything else is right. The shared-link switch (access.ts:119-151) has the allowDownload/allowUpload gates. The checkOtherAccess switch (:157-427) maps all 64 cases correctly. AlbumRead/AlbumDownload (Viewer, :239-247, :283-291) go to the :246 outcome and AlbumAssetCreate/Update/Share/AssetDelete (Editor) go to the :256 outcome, so the earlier Viewer/Editor merge is gone. The ids.has(auth.user.id) checks (:304, :308, :344) are right too.",
+    "fixHint": "Carry the caller's proven fact (idSet.size !== 0) into inlined callees and fold their identical guards. Labels: the :246 and :256 outcomes both read `isOwner.union(isShared)`, so the Viewer vs Editor role (passed as an argument at :244/:254) isn't visible. Show distinguishing call arguments when two outcomes have the same text."
+  },
+  {
+    "repo": "immich-app_immich",
+    "rank": 2,
+    "function": "BaseService.checkAccess",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "A one-line wrapper (base.service.ts:313-315) around checkAccess. The chart is node-for-node the rank-1 chart (only `access` is relabelled `this.accessRepository`), so it has the same dead arrows: 22 `request.ids.size === 0` yes arrows in inlined repository helpers (e.g. access.repository.ts:79, :190, :234) that can't be taken after access.ts:103 has ruled out an empty idSet. The rest is faithful, as in rank 1.",
+    "fixHint": "Same fold as rank 1. Separately, scan should collapse a trivial wrapper and the function it wraps into one row: this row only repeats rank 1."
+  },
+  {
+    "repo": "immich-app_immich",
+    "rank": 3,
+    "function": "checkOtherAccess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "deadArrowOnly": false,
+    "evidence": "All 64 switch cases (access.ts:157-427) go to the right helper or outcome: Viewer album permissions to :246 and Editor ones to :256, AssetShare (:183) separate from TimelineRead (:340), and AssetUpload/ArchiveRead/TimelineDownload ids.has(auth.user.id) checks (:304, :308, :344) with the right empty-set outcomes. Each inlined repository helper's `ids.size === 0` guard (e.g. access.repository.ts:55, :79, :190) is reachable here, because this chart takes `ids` as a free parameter. No throws or callbacks are skipped. The @ChunkedSet decorator (decorators.ts:68-109) only chunks and unions results, so the outcome doesn't change.",
+    "fixHint": "Readability only: the :246 and :256 outcomes both read `isOwner.union(isShared)`, so the Viewer/Editor requirement (:244 vs :254) can be told apart only by line number. Show distinguishing call arguments in outcome labels that would otherwise be identical."
+  }
+]

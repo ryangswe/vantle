@@ -1,0 +1,17 @@
+[
+  {
+    "repo": "calcom_cal.com",
+    "rank": 3,
+    "function": "preprocess",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Every live arrow and check matches form-builder/schema.ts:124-175 and utils.ts:1-50 (the variant throw, the fullName fallback, null/undefined -> \"\", the string/object/default branches, the inlined getFullName/getFirstAndLastName). Both catches (schema.ts:157, utils.ts:37) are listed. The only errors are dead arrows after shared checks. (1) In the string branch, already decided by n37 `typeof response === \"string\"` (schema.ts:146): n14 `typeof value === \"string\"?` -> no -> `value` (utils.ts:33, value=response, which is a string) and n19 `typeof response === \"string\"?` -> no -> n18 (utils.ts:19), so n18 `response.lastName?` and its outcomes n16/n17 are unreachable. (2) In the object branch, already decided by step boxes n33/n34, which set firstAndLastNameResponse to an object (schema.ts:164-170): n25 typeof === \"string\" -> yes -> JSON.parse, n31 `firstAndLastNameResponse?` -> no -> \"\", and n30 typeof === \"string\" -> yes. (3) n4 `typeof value === \"string\"?` -> yes on the parsed.success path (n22, schema.ts:154): zod's object schema makes parsed.data an object.",
+    "fixHint": "Carry values a branch fixed (typeof facts from an earlier check, object literals set by a step box) into checks drawn once for every branch after a shared point, and prune the arrows those facts make impossible. Also, n6/n7 both read `getFullName(...) → nameString`, so the two getFullName results can't be told apart; give them distinct labels."
+  }
+]

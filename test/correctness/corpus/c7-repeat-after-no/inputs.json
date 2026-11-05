@@ -1,0 +1,36 @@
+[
+ {
+  "each": [
+   [
+    {
+     "banned": true,
+     "role": "admin"
+    },
+    {
+     "banned": true,
+     "role": "guest"
+    },
+    {
+     "banned": true,
+     "role": "member"
+    },
+    {
+     "banned": false,
+     "role": "admin"
+    },
+    {
+     "banned": false,
+     "role": "guest"
+    },
+    {
+     "banned": false,
+     "role": "member"
+    }
+   ],
+   [
+    true,
+    false
+   ]
+  ]
+ }
+]

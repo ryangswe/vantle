@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "RocketChat_Rocket.Chat", "rank": 1, "function": "saveUserProfile",
+    "mechanical": false, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "missing-check", "alsoCategories": ["long-labels"],
+    "evidence": "server/meteor-methods/users/saveUserProfile.ts:54 awaits validateUserEditing (server/lib/users/saveUser/validateUserEditing.ts:41–126, ~10 permission checks that throw 'error-action-not-allowed'), and :138 calls passwordPolicy.validate, which throws on a weak password. Neither is in scope or in the not-charted list, so the chart goes from `this.userId?` (n50) straight to the user lookup. Only 89% of labels are short (longest 290).",
+    "fixHint": "Inline awaited validator calls whose only result is a throw, or at least list every opaque call that can throw under not charted; shorten labels by naming repeated subexpressions (`user` instead of re-inlining `await Users.findOneById(this.userId)` in every box)."
+  },
+  {
+    "repo": "RocketChat_Rocket.Chat", "rank": 2, "function": "getRoomWithOptionToJoin",
+    "mechanical": true, "faithful": true, "mainDecision": true, "readable": false, "usable": true,
+    "category": "none", "alsoCategories": [],
+    "evidence": "Checked every arrow against processWebhookMessage.ts:53–94 and the inlined helper getRoomByNameOrIdWithOptionToJoin.ts:27–97: the '#' and '@' cases each draw the full helper (prefix tests :27/:30, DM lookup :35–61, the :69/:73/:80 null/type checks), and the default case draws the two-call fallback to the 'invalid-channel' throw at :93. The only check left out, the auto-join at :90–93, is a side effect and is listed. Readability suffers: 40 of the 49 nodes are two unspecialised copies of the helper, with branches that can't happen at these call sites (errorOnEmpty is always true and type undefined for '#'). The default-case calls are left as opaque boxes coloured `pref`, and assignment boxes (n11, n16) come after the `isObject(room)` check that reads them.",
+    "fixHint": "Specialise inlined helpers to the call site's constant arguments (drop branches such as `errorOnEmpty?` when it is always true); inline consistently rather than leaving the default-case calls opaque; don't colour a call result as `pref`; draw an assignment before the check that reads it."
+  },
+  {
+    "repo": "RocketChat_Rocket.Chat", "rank": 3, "function": "setUsernameWithValidation",
+    "mechanical": false, "faithful": true, "mainDecision": true, "readable": false, "usable": false,
+    "category": "long-labels", "alsoCategories": [],
+    "evidence": "server/lib/users/setUsername.ts:31–77: the chain of throws at :32/:38/:42/:48/:52/:56/:63/:70 is drawn in order, with checkUsernameAvailability (:45–64), saveUserIdentity (:39–71) and _setUsername (:88–113) inlined correctly, and their catch blocks listed. Only 87% of labels are short (longest 290), from re-inlined expressions such as `(await Users.findOneById(_id, { session }) || (await Users.findOneById(_id, { session: session }))).username`. The setRealName branch is drawn even though this call site never passes a name.",
+    "fixHint": "Refer to a helper's local variables by name (`user`, `username`) instead of substituting their full initialisers into every label; specialise inlined helpers to the call's arguments so rawName-undefined branches drop out."
+  }
+]

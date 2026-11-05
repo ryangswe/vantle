@@ -1,0 +1,126 @@
+[
+ {
+  "each": [
+   [
+    true,
+    false
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": true,
+        "code": "code-x",
+        "name": "name-x",
+        "hits": 0,
+        "ready": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": true,
+        "code": "code-x",
+        "name": "name-x",
+        "hits": 0,
+        "ready": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": false,
+        "code": "code-x",
+        "name": "name-x",
+        "hits": 0,
+        "ready": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": false,
+        "code": "code-x",
+        "name": "name-x",
+        "hits": 0,
+        "ready": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    }
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": true,
+        "code": "code-y",
+        "name": "name-y",
+        "hits": 0,
+        "ready": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": true,
+        "code": "code-y",
+        "name": "name-y",
+        "hits": 0,
+        "ready": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": false,
+        "code": "code-y",
+        "name": "name-y",
+        "hits": 0,
+        "ready": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "short": false,
+        "code": "code-y",
+        "name": "name-y",
+        "hits": 0,
+        "ready": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    }
+   ]
+  ]
+ }
+]

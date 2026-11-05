@@ -1,0 +1,75 @@
+[
+ {
+  "each": [
+   [
+    {
+     "$ref": "u"
+    }
+   ],
+   [
+    {
+     "user": {
+      "$ref": "u"
+     }
+    }
+   ],
+   [
+    true,
+    false
+   ]
+  ],
+  "shared": {
+   "u": {
+    "admin": true
+   }
+  }
+ },
+ {
+  "each": [
+   [
+    {
+     "$ref": "u"
+    }
+   ],
+   [
+    {
+     "user": {
+      "$ref": "u"
+     }
+    }
+   ],
+   [
+    true,
+    false
+   ]
+  ],
+  "shared": {
+   "u": {
+    "admin": false
+   }
+  }
+ },
+ {
+  "each": [
+   [
+    {
+     "admin": true
+    },
+    {
+     "admin": false
+    }
+   ],
+   [
+    {
+     "user": {
+      "admin": true
+     }
+    }
+   ],
+   [
+    true,
+    false
+   ]
+  ]
+ }
+]

@@ -1,0 +1,1 @@
+A step inside a try that unseen code can throw out of must not leave an older step's fact in force after the try. With p = true and s = '{}' the code returns 'modeB'. From the review of the catch fix: a first version dropped the in-try step's facts and lost this route.

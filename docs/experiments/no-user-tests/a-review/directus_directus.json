@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [],
+    "evidence": "The function is glue: one admin check at fetch-permitted-ast-root-fields.ts:34, then a call to getDBQuery. The chart is the inlined query builder (get-db-query.ts:51-373), drawn twice, once per root branch, with outcomes that differ only as 'dbQuery' or 'wrapperQuery (changed at line N)'. Which fields are permitted is decided in SQL case/when, built by getColumnPreprocessor and applyQuery, which aren't drawn. The paths are faithful, though the line-242 return is merged into the line-91 'dbQuery' outcome box.",
+    "fixHint": "Rank scan rows by the function's own decision points (own=2 here), not by inlined callee boxes. When a caller branch only changes an argument, don't duplicate the whole inlined callee under each branch. Keep outcomes from different return statements apart even when they share a variable name."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The body's checks are drawn: email with multiple keys, tfa_secret, provider and external_identifier for non-admins (users.ts:291-328). The private methods that also reject the update aren't inlined or listed: validateEmail (:172-187), checkUniqueEmails (:53-82), checkPasswordPolicy (:90-121) and checkProviderEntitlement (:193-203). The catch at :329 defers every throw to opts.preMutationError. It is named, but the chart still shows the throws as final outcomes.",
+    "fixHint": "Inline this.<private method>() calls on the same class. Model a catch that only stores the error and continues, rather than drawing the throws as terminal outcomes. Merge the two outcome boxes for the same return (n4 'await super.updateMany(...)' and n7 'result')."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 3,
+    "function": "validateApplyDiff",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every exit matches validate-diff.ts:77-202: the Joi error throw, the empty diff returning false, a matching hash or force returning true, the per-kind create/delete existence throws for collections, fields and relations, the unsupported system-field actions and the non-is_indexed path throws, and the final hash-mismatch throw. Loops are drawn as one pass.",
+    "fixHint": "Minor: only the loops at :145 and :173 get the 'one pass' warning. The loops at :93 and :119 are drawn the same way without one. The related_collection check (:175) changes only a message string and could be folded."
+  }
+]

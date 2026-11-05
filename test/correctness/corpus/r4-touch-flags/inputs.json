@@ -1,0 +1,178 @@
+[
+ {
+  "each": [
+   [
+    true,
+    false
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": true,
+        "ready": false,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": true,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": true,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": false,
+        "live": true
+       }
+      }
+     },
+     "tenantIdentifier": "tx"
+    }
+   ],
+   [
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": true,
+        "ready": false,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": true,
+        "done": false,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": true,
+        "live": false
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    },
+    {
+     "registry": {
+      "lookupPrimaryWidgetForTenantWithFallback": {
+       "$fn": {
+        "hits": 0,
+        "a": 0,
+        "b": 0,
+        "ok": false,
+        "ready": false,
+        "done": false,
+        "live": true
+       }
+      }
+     },
+     "tenantIdentifier": "ty"
+    }
+   ]
+  ]
+ }
+]

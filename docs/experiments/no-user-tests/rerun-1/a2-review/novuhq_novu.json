@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "novuhq_novu",
+    "rank": 2,
+    "function": "AgentInboundHandler.isExistingConversationEventBlocked",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The arrows through requiresExplicitMention, maybeBlock and maybeStopKeylessInbound all match the code (inbound-turn.handler.ts:2051-2063, :1025-1067; plan-limit-gate.service.ts:150-165). But `await this.restoreMissingMentionFlag(...)` (:2052) is neither drawn nor listed, and it sets `message.isMention = true` (:1513) when the policy is SMART/MENTION_ONLY, the thread isn't a DM, and the raw payload mentions the bot. Box n11 `isMention === true` then reads that mutated flag, so an @-mention arriving without the flag is let through, while the chart says it is blocked. Readable note: n10 repeats `await this.buildMentionContext(...)` four times (615 chars).",
+    "fixHint": "Follow statement-called helpers that mutate an argument a later check reads (draw their checks before that check, or list them under not charted). Substitute an awaited local once, as a named value, instead of repeating its initializer."
+  },
+  {
+    "repo": "novuhq_novu",
+    "rank": 3,
+    "function": "AddAgentIntegration.execute",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The routing and every guard in add-agent-integration.usecase.ts (:58-199, :217-233, :293-354) and the inlined throws are right, and the step boxes for seedEmailSecretKey are placed correctly. But it stops silently inside the provisioning helpers: after n9 (shared inbox) the chart ends at `response`, though provisionVanityInbox can throw (find-or-create-novu-email.service.ts:196-212, plus claim()'s InboxAddressTaken at agent-inbox-address.service.ts:98-99). The withTransaction callbacks can throw ConflictException 'already linked' (:456; web-chat service :162) and the routing-key retry error (:314). None of this is drawn or listed. These are race/exhaustion outcomes, but they are explicit throws. Readable note: 45 boxes, two near-copies of email provisioning and createLink, and unfolded constant tests like `NovuAgent === AgentEmailInbox && \u2026` (n22).",
+    "fixHint": "When inlining stops at a helper in return position (provisionVanityInbox) or at a callback (withTransaction), list it under not charted instead of drawing its result as the outcome. Fold comparisons between two enum constants."
+  }
+]

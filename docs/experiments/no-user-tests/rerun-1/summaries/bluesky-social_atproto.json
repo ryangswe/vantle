@@ -1,0 +1,271 @@
+{
+  "repo": "bluesky-social_atproto",
+  "package": "services/ozone",
+  "tried": [
+    {
+      "dir": "packages/bsky",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/ozone",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/pds",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-provider",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-schema",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-types",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/bsync",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/api",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/dev-env",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-client",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/repo",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-scopes",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-data",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/crypto",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/xrpc-server",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-client-browser",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/syntax",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/identity",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-builder",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-client-expo",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/common-web",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/did",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/did-resolver",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lexicon",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/common",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/handle-resolver",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/jwk",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/ws-client",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-installer",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-json",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-rpc",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-server",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/fetch",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/aws",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/sync",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/tap",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/identity-resolver",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/fetch-node",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/simple-store",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-document",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-provider-api",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/xrpc",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/opentelemetry-node",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-password-session",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lexicon-resolver",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-client",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-resolver",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex-cli",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/oauth-client-node",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/handle-resolver-node",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/internal/pipe",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/lex/lex-cbor",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/jwk-jose",
+      "error": "tsconfig loads no source files"
+    },
+    {
+      "dir": "packages/oauth/jwk-webcrypto",
+      "error": "tsconfig loads no source files"
+    }
+  ],
+  "files": 3,
+  "scanned": 2,
+  "scanErrors": 0,
+  "scanErrorSamples": [],
+  "scanMs": 114,
+  "charts": [
+    {
+      "rank": 1,
+      "name": "main",
+      "file": "api.ts",
+      "line": 18,
+      "lines": 91,
+      "scanBoxes": 0,
+      "own": 9,
+      "ms": 21,
+      "boxes": 0,
+      "outcomes": 1,
+      "paths": 1,
+      "shortLabels": 1,
+      "longestLabel": 0,
+      "notCharted": 4,
+      "warnings": 0,
+      "scope": 1,
+      "mechanical": false
+    },
+    {
+      "rank": 2,
+      "name": "main",
+      "file": "daemon.ts",
+      "line": 11,
+      "lines": 33,
+      "scanBoxes": 0,
+      "own": 3,
+      "ms": 7,
+      "boxes": 0,
+      "outcomes": 1,
+      "paths": 1,
+      "shortLabels": 1,
+      "longestLabel": 0,
+      "notCharted": 2,
+      "warnings": 0,
+      "scope": 1,
+      "mechanical": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 1,
+  "function": "matchContentType",
+  "mechanical": true,
+  "faithful": true,
+  "mainDecision": true,
+  "readable": true,
+  "usable": true,
+  "category": "none",
+  "alsoCategories": [],
+  "evidence": "Each check matches src/lib/http.ts:162-209 in order: '*' gives true, a bad wantType, a missing type or subtype, a type/wildcard mismatch, too few params, then the params.has loop. The loop is drawn as one pass, with a warning. One nuance: the zero-iteration case (no wanted params, the common path) has no arrow of its own and seems to go through params.has(wantParam).",
+  "fixHint": "When drawing a loop as one pass, add an 'empty/no items' edge past the body so the common no-parameter path is visible."
+ },
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 2,
+  "function": "retryIntervalFromResponse",
+  "mechanical": true,
+  "faithful": true,
+  "mainDecision": true,
+  "readable": true,
+  "usable": true,
+  "category": "none",
+  "alsoCategories": [],
+  "evidence": "Exact match with src/lib/retries.ts:196-222: retry-after-ms present and a finite value ≥0 gives that value; an empty retry-after gives 0; an integer gives ×1000; an integer Date.parse gives a positive delta or 0; otherwise 0. All 11 paths are correct.",
+  "fixHint": "None needed. Labels would read better with the local names (retryVal, parsedDate) instead of the substituted header calls."
+ },
+ {
+  "repo": "unkeyed_unkey",
+  "rank": 3,
+  "function": "encodeDeepObjectObject",
+  "mechanical": true,
+  "faithful": true,
+  "mainDecision": false,
+  "readable": true,
+  "usable": false,
+  "category": "not-a-decision",
+  "alsoCategories": [
+   "not-charted-dominates"
+  ],
+  "evidence": "The drawn boxes are correct: null gives undefined (encodings.ts:250), then the inlined isPlainObject guard (primitives.ts:154-166, catch listed) gives a throw or out.slice(1). But that is only argument validation. The function's job is the encoding in the Object.entries(...).forEach callback (:265-286): it skips null, recurses for nested objects and handles arrays. That callback is neither drawn nor listed, so the chart shows none of how the output is built.",
+  "fixHint": "List forEach/map callbacks that contain conditionals under not charted. Rank serializers and encoders (and boxes that come only from inlined type guards) lower in scan."
+ }
+]

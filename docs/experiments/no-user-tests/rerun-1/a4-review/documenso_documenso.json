@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "documenso_documenso",
+    "rank": 2,
+    "function": "completeDocumentWithToken",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every guard is drawn in source order with correct arrows: envelope missing (complete-document-with-token.ts:87), inlined assertSenderNotDisabled/getUserDisabledStatus throws (assert-user-not-disabled.ts:50,64), mapSecondaryIdToDocumentId (utils/envelope.ts:206), recipients/SIGNED/status (:98,:111,:118), inlined assertRecipientNotExpired (utils/recipients.ts:298), REJECTED, SEQUENTIAL turn, 2FA block (:143-199), name/email derivation as four correct step boxes joining 'recipientEmail?' (:228-251), and the unsigned-fields check on both the date-patched and original fields (:254,:314). Everything after :314 is correctly listed: the $transaction callback (its :343 ALREADY_SIGNED throw), triggerWebhook's catch (trigger-webhook.ts:33, which rethrows), isRecipientAuthorized and unsafeBuildEnvelopeIdQuery (throws inside ts-pattern callbacks), and the five side-effect ifs (:450-:568) whose only results are jobs and updates (the function returns undefined).",
+    "fixHint": "None needed for usability. Small issues: step-box labels are long and truncated (they repeat the substituted prisma.findMany call), and the 'recipientEmail?' no-arrow is drawn from the two steps where recipient.email is already known truthy."
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "repo": "logto-io_logto",
+  "package": "packages/phrases",
+  "tried": [],
+  "files": 1857,
+  "scanned": 2,
+  "scanErrors": 0,
+  "scanErrorSamples": [],
+  "scanMs": 1626,
+  "charts": [
+    {
+      "rank": 1,
+      "name": "isBuiltInLanguageTag",
+      "file": "src/index.ts",
+      "line": 72,
+      "lines": 2,
+      "scanBoxes": 1,
+      "own": 0,
+      "ms": 5,
+      "boxes": 1,
+      "outcomes": 2,
+      "paths": 2,
+      "shortLabels": 1,
+      "longestLabel": 51,
+      "notCharted": 0,
+      "warnings": 0,
+      "scope": 1,
+      "mechanical": false
+    },
+    {
+      "rank": 2,
+      "name": "getDefaultLanguageTag",
+      "file": "src/index.ts",
+      "line": 67,
+      "lines": 4,
+      "scanBoxes": 0,
+      "own": 1,
+      "ms": 3,
+      "boxes": 0,
+      "outcomes": 1,
+      "paths": 1,
+      "shortLabels": 1,
+      "longestLabel": 0,
+      "notCharted": 0,
+      "warnings": 0,
+      "scope": 1,
+      "mechanical": false
+    }
+  ]
+}

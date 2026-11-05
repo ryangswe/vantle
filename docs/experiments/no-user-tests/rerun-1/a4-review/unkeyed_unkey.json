@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "unkeyed_unkey",
+    "rank": 3,
+    "function": "encodeDeepObjectObject",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": true,
+    "usable": false,
+    "category": "not-charted-dominates",
+    "alsoCategories": [
+      "not-a-decision"
+    ],
+    "evidence": "It's faithful: value==null \u2192 undefined (encodings.ts:250), inlined isPlainObject (primitives.ts:155-162) with !isPlainObject \u2192 throw (encodings.ts:260) and the try/catch listed, then out.slice(1). But four of the five boxes are isPlainObject's type test. The encoding the function exists for (skip null entries, recurse into nested objects, expand arrays, percent-encode) sits in the Object.entries(value).forEach callback (encodings.ts:264-285), which is listed as not charted.",
+    "fixHint": "Draw loop and forEach callback bodies over a collection, e.g. as a per-entry sub-flow, or have scan rank serialisation helpers whose decisions sit in a callback lower."
+  }
+]

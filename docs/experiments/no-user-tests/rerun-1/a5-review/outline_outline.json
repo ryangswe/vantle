@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "outline_outline",
+    "rank": 2,
+    "function": "WebsocketsProcessor.perform",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [
+      "not-charted-dominates"
+    ],
+    "evidence": "A 40-case switch on event.name (WebsocketsProcessor.ts:43-1032) that routes each event to socket emits. The arrows match the code: each case's find-or-return guard, the documents.create import skip (:84), the collectionId/collection branches (:94-98), unarchive (:165), collections.update permission (:382) and users.promote isGuest (:985), with void cases sent to undefined. But who receives what is decided in side effects, in the getDocument/Collection/TemplateEventChannels helpers (:1035-1122) and in findAllInBatches callbacks (:545, :767, :822, :875). Side-effect-only guards such as :288, :333, :469, :491, :756 and :956 are neither drawn nor listed, while the similar :390, :415 and :506 are listed.",
+    "fixHint": "Scan should rank a large switch of side-effect handlers low. List side-effect-only checks consistently (the :288-style guards like :415). Inlining a repeated declarator into the outcome labels (Promise.all repeated six times in n12) makes them unreadable, so keep the variable name."
+  }
+]

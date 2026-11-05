@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "documenso_documenso",
+    "rank": 2,
+    "function": "completeDocumentWithToken",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "The guard chain (lines 87-319) and the inlined assertSenderNotDisabled/getUserDisabledStatus, mapSecondaryIdToDocumentId and assertRecipientNotExpired throws are all drawn correctly, and the step boxes for the name/email branches (228-245) rejoin at `recipientEmail?` correctly. But two throws that change the outcome are neither drawn nor listed: the `updatedRecipientCount === 0` throw RECIPIENT_ALREADY_SIGNED inside the `prisma.$transaction(async (tx) => ...)` callback (complete-document-with-token.ts:343), and the 'Invalid envelope ID' throw in unsafeBuildEnvelopeIdQuery (utils/envelope.ts:55), called inside the findFirst argument at line 67. The chart ends at `undefined` after the unsigned-fields check.",
+    "fixHint": "Follow (or at least list under not charted) throws inside awaited callbacks such as prisma.$transaction(async tx => ...), and list helpers that can throw when they're called inside an expression argument, not only as a statement."
+  }
+]

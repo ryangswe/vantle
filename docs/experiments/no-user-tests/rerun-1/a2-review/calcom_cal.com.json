@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "calcom_cal.com",
+    "rank": 3,
+    "function": "preprocess",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Matches form-builder/schema.ts:124-175 and the inlined preprocessNameFieldDataWithVariant/getFullName/getFirstAndLastName (utils.ts:1-50): missing-variant throw (130), variant correction (134), null response (142), string \u2192 safeParse \u2192 variant split (146-160), object with firstName/lastName (163-171), default ''. The JSON.parse catch paths (schema.ts:157, utils.ts:37) are listed as not charted.",
+    "fixHint": "Labels: bind `parsed = nameJsonSchema.safeParse(JSON.parse(response))` once instead of repeating the whole z.object(...) expression in 6 boxes. Show n6 as `${firstName} ${lastName}` rather than 'getFullName(...) \u2192 nameString'. Resolve getFirstAndLastName's `value` (after `value = value || ''`) to the caller's argument in n4/n14/n25."
+  }
+]

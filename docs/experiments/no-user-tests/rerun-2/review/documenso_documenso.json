@@ -1,0 +1,47 @@
+[
+  {
+    "repo": "documenso_documenso",
+    "rank": 1,
+    "function": "signFieldWithToken",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": ["wrong-arrow"],
+    "deadArrowOnly": false,
+    "evidence": "Missing, unlisted throws: getRecipientFieldsWhereInput (in scope, called at sign-field-with-token.ts:71) calls getAssistableRecipientsWhereInput -> getLaterSigningStepRecipientsWhereInput for ASSISTANT recipients (recipient-queries.ts:86-95, :66), which throws INVALID_REQUEST at recipient-queries.ts:16-20 and :32-36; that helper is not in scope, not drawn and not under not charted. Also undrawn and unlisted: prisma findFirstOrThrow at :62 (token lookup) and :68 (field lookup scoped to the recipient, i.e. the field-access rule). Dead arrows too: the step `customText = DateTime...` (DATE branch, :201-205) leads to the shared `isSignatureField && ...` box (:207) whose yes arrow can't be taken because DATE implies !isSignatureField (:194); `field.type === DATE` (:201) has a yes arrow reachable from the SIGNATURE path through validateFieldAuth (validate-field-auth.ts:29); TEXT/CHECKBOX/RADIO/DROPDOWN yes arrows (:140-169) are reachable after NUMBER-yes (:131). Every other arrow matches the guard chain at :88-236, including the inlined assertSenderNotDisabled/getUserDisabledStatus, assertRecipientNotExpired and validateFieldAuth.",
+    "fixHint": "Follow helpers called inside object-literal arguments of another call (prisma where clauses) for throws, or list them under not charted. Treat known throwing library calls (`findFirstOrThrow`, zod `.parse`) as listed not-charted throws. Carry equality facts on the same discriminant (`field.type`) and on step-box values into later shared checks, or duplicate the check per branch, so infeasible arrows aren't drawn."
+  },
+  {
+    "repo": "documenso_documenso",
+    "rank": 2,
+    "function": "completeDocumentWithToken",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Dead arrow: the `envelope.recipients[0].email` box (:237) yes -> step `recipientEmail = envelope.recipients[0].email` -> shared `recipientEmail` box (:247), whose no arrow ('Recipient email is required' throw, :248) can't be taken on that branch, because recipientEmail is the truthy recipient.email. Everything else is right: the guards at :87-212 (envelope, inlined sender-disabled check, mapSecondaryIdToDocumentId :96 -> envelope.ts:206, already signed, status, expiry, rejected, sequential turn, 2FA with its three throws), the name/email derivation steps, the V2 date branch rejoining fieldsContainUnsignedRequiredField (:314), and the post-completion branches (:450-576) and transaction race throw (:343) all listed under not charted. External prisma `*OrThrow` re-reads (:407, :578) and zod parses aren't drawn. They are integrity assertions on data already read, not decisions, so not counted.",
+    "fixHint": "When a step box assigns a variable from a value a preceding check proved truthy, fold the later check on that variable for that branch (or duplicate the check per branch) instead of drawing both arrows from the shared box."
+  },
+  {
+    "repo": "documenso_documenso",
+    "rank": 3,
+    "function": "validateNumberField",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "deadArrowOnly": true,
+    "evidence": "Dead arrows: `foundRegex` no -> step `errors changed (line 18)` -> shared `foundRegex && !foundRegex.test(value)` box (validate-number.ts:21), whose yes arrow can't be taken on that branch (foundRegex is falsy). `typeof maxValue... && maxValue < minValue` (:48) is the same condition as `minValue > maxValue` (:44), so its no arrow is dead after :44-yes and its yes arrow is dead after :44-no. That redundancy comes from the source, but the chart still draws infeasible arrows. Otherwise the checklist is right: every push at :18-61 is a step box on the yes side of its own check, each check is drawn once in source order, and both outcomes return `errors`.",
+    "fixHint": "Propagate the falsy value from the `!foundRegex` branch into the shared :21 check (or draw that check per branch), and recognise a check that is logically identical to an earlier one. Outcome labels 'errors (changed)' and 'errors (changed at line 61)' say little. A checklist rendering (one row per rule -> message) would read better."
+  }
+]

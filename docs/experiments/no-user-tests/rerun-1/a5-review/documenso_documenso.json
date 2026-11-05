@@ -1,0 +1,16 @@
+[
+  {
+    "repo": "documenso_documenso",
+    "rank": 2,
+    "function": "completeDocumentWithToken",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": true,
+    "readable": true,
+    "usable": true,
+    "category": "none",
+    "alsoCategories": [],
+    "evidence": "Every guard between complete-document-with-token.ts:87 and :319 is drawn in code order with the right yes/no arrows. That includes the inlined throws of assertSenderNotDisabled/getUserDisabledStatus (assert-user-not-disabled.ts:50,64), mapSecondaryIdToDocumentId (envelope.ts:206) and assertRecipientNotExpired (recipients.ts:298), plus the 2FA sub-checks (162-199), the name/email derivation steps (228-251) and the V2 date-field fork into the unsigned-fields check (254-319). The callback-only throwers are listed: unsafeBuildEnvelopeIdQuery, isRecipientAuthorized, the $transaction (including the concurrent-sign throw at 344) and the triggerWebhook catch. So are the post-completion side-effect checks (450-568).",
+    "fixHint": "None needed. Optionally, draw the $transaction callback's RECIPIENT_ALREADY_SIGNED throw (line 343), since it is a real outcome."
+  }
+]

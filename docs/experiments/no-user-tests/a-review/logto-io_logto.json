@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "logto-io_logto", "rank": 1, "function": "isBuiltInLanguageTag",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": true, "usable": false,
+    "category": "not-a-decision", "alsoCategories": [],
+    "evidence": "packages/phrases/src/index.ts:72 is a one-line Zod type guard (`builtInLanguageTagGuard.safeParse(language).success`); the chart has 1 box (below the 2-box minimum) and is trivially correct. The rule-picked package packages/phrases holds 1,857 .ts files, all but src/index.ts and src/types.ts being locale translation tables, so scan found only 2 functions.",
+    "fixHint": "Package rule: count files that contain functions (or skip data-only/locale folders) when picking the package; scan could also mark one-box predicates as not worth charting."
+  },
+  {
+    "repo": "logto-io_logto", "rank": 2, "function": "getDefaultLanguageTag",
+    "mechanical": false, "faithful": true, "mainDecision": false, "readable": true, "usable": false,
+    "category": "not-a-decision", "alsoCategories": [],
+    "evidence": "packages/phrases/src/index.ts:67–70 is a single expression: `builtInLanguageTagGuard.parse(findSupportedLanguageTag(language ? [language] : [], builtInLanguages))`. The chart has 0 boxes and one outcome; the argument ternary isn't a branch in the result. Nothing to chart.",
+    "fixHint": "Same as rank 1: the package rule picked a translations package."
+  },
+  {
+    "repo": "logto-io_logto", "rank": 3, "function": null,
+    "mechanical": false, "faithful": false, "mainDecision": false, "readable": false, "usable": false,
+    "category": "not-a-decision", "alsoCategories": [],
+    "evidence": "No third row: summary.json shows packages/phrases scanned 2 files and found only the 2 functions above (src/index.ts:67, :72). The other 1,855 .ts files are locale phrase objects with no functions.",
+    "fixHint": "Same as rank 1: pick a package by code, not by .ts file count (e.g. packages/core)."
+  }
+]

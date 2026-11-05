@@ -1,0 +1,48 @@
+[
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 1,
+  "function": "evaluateSingleCondition",
+  "mechanical": false,
+  "faithful": true,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "too-big",
+  "alsoCategories": [
+   "long-labels"
+  ],
+  "evidence": "167 decision boxes for a 250-line operator switch (lib/surveyLogic/utils.ts:306-555): the switch from :369 is drawn again for every branch of the earlier operand checks (:337-356), and getLeftOperandValue(...)/getRightOperandValue(...) are substituted into every label, so only 54% of labels are short (longest 919). Only spot-checked for faithfulness: the outcomes are just true/false, and the catch at :552 is listed. The array callbacks at :496-514 are listed as not charted but still drawn.",
+  "fixHint": "Don't substitute call expressions into labels; keep the local name (leftValue/rightValue). Merge the paths again after effect-only checks instead of copying the downstream switch onto each branch."
+ },
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 2,
+  "function": "handler",
+  "mechanical": false,
+  "faithful": false,
+  "mainDecision": true,
+  "readable": false,
+  "usable": false,
+  "category": "wrong-arrow",
+  "alsoCategories": [
+   "long-labels"
+  ],
+  "evidence": "handleApiError is inlined, but its switch on err.type (modules/api/v2/lib/utils.ts:19) isn't folded for literal arguments, so the literal { type: \"unauthorized\" } error (route.ts:178-184) fans out to all 9 cases: badRequest, notFound, conflict, internalServerError and so on. The same happens for every literal 'bad_request' call (:152, :213, :237, :260). That makes 58 outcomes, and the substituted handleApiError(...) text gives the long labels (75% short).",
+  "fixHint": "Fold a switch or if when the discriminant is a property of an object literal that was substituted in. Show an inlined helper's outcome as the helper's result instead of repeating the call text in every outcome label."
+ },
+ {
+  "repo": "formbricks_formbricks",
+  "rank": 3,
+  "function": "processSingleFilter",
+  "mechanical": true,
+  "faithful": true,
+  "mainDecision": true,
+  "readable": true,
+  "usable": true,
+  "category": "none",
+  "alsoCategories": [],
+  "evidence": "Every arrow matches modules/ee/contacts/segments/lib/filter/prisma-query.ts: the root.type switch (:457), isSet/isNotSet, date/number/string operator routing and the hasUnmigratedRows / length===0 fallbacks (:234-294, :177-207), userId-only person filters (:306), the device equals/notEquals match (:330-354) and survey-interaction negate (:383). The date-value checks (:62-90) are listed. Caveats: the segment branch is a single box (a recursion warning, not a not-charted entry) that hides the circular, not-found and cross-workspace refusals (:398-443); n2 and n3 are the same return split by a pointless typeof check; and the attribute subtree is drawn twice (attribute and person).",
+  "fixHint": "List the guards of a recursive helper that comes before its recursive call (or draw them) under not charted, not only in a warning. Don't split on a check whose two outcomes are the same expression."
+ }
+]

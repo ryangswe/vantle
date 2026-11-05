@@ -1,0 +1,32 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": true,
+    "mainDecision": false,
+    "readable": false,
+    "usable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [
+      "not-charted-dominates"
+    ],
+    "evidence": "The function's own logic is one admin check (fetch-permitted-ast-root-fields.ts:34), and then it hands off to getDBQuery. The chart is getDBQuery's query-builder plumbing (get-db-query.ts:51-373: aggregate, sort, needsInnerQuery, caseWhen, wrapper), drawn twice. Every outcome is the same giant getDBQuery(...) label with 'changed at line N'. The arrows check out, but the permission logic that decides the permitted fields lives in getColumnPreprocessor/applyQuery (listed) and in the SQL case/when.",
+    "fixHint": "scan should not rank a thin wrapper by the boxes of the builder it inlines. Builder functions whose outcomes are all one query object mutated by steps aren't decisions. If kept: the non-admin branch's outcomes say `permissions: permissions` where the value is `[]`, and the sortRecords.map callbacks' checks (get-db-query.ts:168, 182, 224) are neither drawn nor listed."
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": true,
+    "usable": false,
+    "category": "missing-check",
+    "alsoCategories": [],
+    "evidence": "Throwing helpers called as statements are neither drawn nor listed: this.validateEmail (users.ts:300, throws at 181), this.checkUniqueEmails (301, throws at 59/78, the case-insensitive uniqueness check) and this.checkProviderEntitlement (317, throws at 199). So a duplicate email or an unlicensed provider is charted as reaching super.updateMany normally. Also, the drawn throws (293, 309, 314, 324) are inside a try whose catch (329, listed) stores them in opts.preMutationError and continues. ItemsService.updateMany rethrows them only after hooks and validateAccess (items.ts:780-814), so they aren't terminal exits.",
+    "fixHint": "Apply the new 'statement helper that can throw' inlining to `this.` private methods and awaited calls (validateEmail, checkUniqueEmails, checkProviderEntitlement), or list them. For throws inside a try whose catch doesn't rethrow, draw the catch's continuation instead of a terminal throw outcome (here: set preMutationError \u2192 flags \u2192 super.updateMany, which rethrows)."
+  }
+]

@@ -1,0 +1,45 @@
+[
+ {
+  "each": [
+   [
+    "docs",
+    "status",
+    "media",
+    "rest",
+    "other"
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    "eu"
+   ],
+   [
+    {
+     "$undefined": true
+    },
+    "",
+    "a",
+    "/a"
+   ]
+  ],
+  "globals": {
+   "mirror": [
+    {
+     "$fn": {
+      "$undefined": true
+     }
+    },
+    {
+     "$fn": "https://m"
+    }
+   ],
+   "finish": [
+    {
+     "$fnFresh": "P"
+    }
+   ]
+  }
+ }
+]

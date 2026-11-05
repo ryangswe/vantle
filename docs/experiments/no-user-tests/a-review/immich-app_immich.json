@@ -1,0 +1,23 @@
+[
+  {
+    "repo": "immich-app_immich", "rank": 1, "function": "checkAccess",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "wrong-arrow", "alsoCategories": [],
+    "evidence": "Outcomes are merged by label text even when their hidden locals differ. TimelineRead goes to the AssetShare outcome `isOwner.union(isPartner)` from src/utils/access.ts:183 (n16), although the code at :337-341 uses ids.has(user) plus timeline partner access. AlbumAssetCreate, AlbumUpdate, AlbumShare and AlbumAssetDelete (Editor role, :249-301) go to AlbumRead's Viewer-role outcome at :246 (n21). Read literally, the chart says viewers can update albums. The shared-link switch and the ids-empty check are right. Outcome labels are 400-1800-char SQL.",
+    "fixHint": "Key outcome nodes on source location (or on fully substituted values), not on the return text, when the expression names locals that differ per branch (isShared, isOwner, isPartner). Substitute those locals too, or keep separate boxes."
+  },
+  {
+    "repo": "immich-app_immich", "rank": 2, "function": "BaseService.checkAccess",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "wrong-arrow", "alsoCategories": ["other"],
+    "evidence": "A 3-line pass-through to utils checkAccess (src/services/base.service.ts:313-315), so the chart is rank 1's again, with the same merged-outcome errors: TimelineRead goes to the :183 outcome, and the Editor-role album permissions go to the :246 Viewer outcome. Scan lists the wrapper and the wrapped function as separate top rows, so this repo's top three give two rows to one chart.",
+    "fixHint": "Same outcome-identity fix as rank 1. In scan, de-duplicate a pure wrapper whose whole chart is one inlined callee, or rank it by its own boxes (own = 0)."
+  },
+  {
+    "repo": "immich-app_immich", "rank": 3, "function": "checkOtherAccess",
+    "mechanical": true, "faithful": false, "mainDecision": true, "readable": false, "usable": false,
+    "category": "wrong-arrow", "alsoCategories": [],
+    "evidence": "Charted as the root, it substitutes isOwner, so TimelineRead gets its own correct outcome (n27). But `isShared` stays unsubstituted, so AlbumAssetCreate, AlbumUpdate, AlbumShare and AlbumAssetDelete (Editor, src/utils/access.ts:249-301) still point at AlbumRead's Viewer outcome at :246 (n10). The rest of the 60-case switch routes correctly. The inlined repository size===0 checks are redundant but harmless.",
+    "fixHint": "Same outcome-identity fix: don't merge outcomes whose text matches but whose locals (isShared and its AlbumUserRole argument) differ. Substitute every local in the outcome or keep the source line in the node key."
+  }
+]

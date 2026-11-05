@@ -1,0 +1,148 @@
+[
+ {
+  "each": [
+   [
+    true,
+    false
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    true,
+    false
+   ],
+   [
+    {
+     "x": 0,
+     "p": false,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 0,
+     "p": true,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 0,
+     "p": false,
+     "q": true,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 0,
+     "p": false,
+     "q": false,
+     "r": true,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 0,
+     "p": false,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 0,
+     "p": true,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 0,
+     "p": false,
+     "q": true,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 0,
+     "p": false,
+     "q": false,
+     "r": true,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 1,
+     "p": true,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": true,
+     "r": false,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": false,
+     "r": true,
+     "s": false,
+     "y": 0
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 1,
+     "p": true,
+     "q": false,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": true,
+     "r": false,
+     "s": false,
+     "y": 5
+    },
+    {
+     "x": 1,
+     "p": false,
+     "q": false,
+     "r": true,
+     "s": false,
+     "y": 5
+    }
+   ]
+  ]
+ }
+]

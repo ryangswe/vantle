@@ -1,0 +1,32 @@
+[
+  {
+    "repo": "directus_directus",
+    "rank": 1,
+    "function": "fetchPermittedAstRootFields",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": false,
+    "readable": false,
+    "category": "not-a-decision",
+    "alsoCategories": [
+      "missing-check"
+    ],
+    "evidence": "The function (fetch-permitted-ast-root-fields.ts:21-51) only fetches permissions for non-admins (line 34) and returns a Knex builder from getDBQuery; the chart is that admin check plus getDBQuery's SQL-shape branches drawn twice (34 of 35 boxes), all ending in 'dbQuery'/'wrapperQuery'. The permission decision lives in fetchPermissions and the case/when preprocessor, not drawn. Checks that change the returned query inside sortRecords.map callbacks (get-db-query.ts:168, 182, 224) are neither drawn nor listed, while sibling effect checks (104, 246) are listed and 133 is drawn.",
+    "fixHint": "scan should rank query builders whose outcomes are all the same builder lower. Checks inside .map/.filter callbacks that mutate the returned object should at least be listed under not charted. The whole getDBQuery subgraph is duplicated per admin branch only because `permissions` differs; merge identical downstream subgraphs.",
+    "usable": false
+  },
+  {
+    "repo": "directus_directus",
+    "rank": 2,
+    "function": "UsersService.updateMany",
+    "mechanical": true,
+    "faithful": false,
+    "mainDecision": true,
+    "readable": false,
+    "category": "wrong-arrow",
+    "alsoCategories": [],
+    "evidence": "Every throw in the try (users.ts:293, 309, 314, 324 and the inlined validateEmail/checkUniqueEmails/checkPasswordPolicy/checkProviderEntitlement throws) is drawn going straight to the single outcome 'await super.updateMany', skipping the catch's `opts.preMutationError = err` (330), which is what makes super.updateMany throw (items.ts:813), and skipping the role/status checks (333, 337) that run after the catch. The 'role' in data 'no' arrow also goes straight to the outcome, past the status check (337) that runs regardless, and the 'opts changed (line 334)' step appears only for role-yes/status-no. So the chart says rejected and accepted updates end the same way.",
+    "fixHint": "Draw the catch as a step box ('opts.preMutationError = err (line 330)') on every throw path and continue it to line 333 as written. Don't skip drawn checks after an independent if (role \u2192 status). Since 333/337 are both drawn and listed, pick one. Following preMutationError into super.updateMany (items.ts:813) would turn these paths into real throw outcomes.",
+    "usable": false
+  }
+]
