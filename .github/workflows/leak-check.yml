@@ -1,0 +1,39 @@
+# Checks that nothing private is published: files, commit messages and authors, branch names,
+# and pull request text. Needs no secrets.
+# A pull request from a fork runs its own copy of this check, so read any change to scripts/
+# or .github/ before merging it.
+name: leak-check
+on:
+  push:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Files
+        run: scripts/leak-check.sh
+      - name: Commit messages, authors and committers
+        run: |
+          git log --format='%an <%ae>%n%cn <%ce>%n%B' > "$RUNNER_TEMP/commits.txt"
+          scripts/leak-check.sh "$RUNNER_TEMP/commits.txt"
+      - name: Branch name, pull request title and description
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          TITLE: ${{ github.event.pull_request.title }}
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s\n%s\n%s\n' "$BRANCH" "$TITLE" "$BODY" > "$RUNNER_TEMP/pr.txt"
+          scripts/leak-check.sh "$RUNNER_TEMP/pr.txt"
+      - name: Secrets (gitleaks)
+        # v2.3.9, pinned to a commit because it's a third-party action.
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
