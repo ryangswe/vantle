@@ -1,7 +1,10 @@
-# Typecheck and unit tests on every push. Needs no secrets.
+# Workflow check, typecheck and unit tests on pushes to main and on every pull request.
+# Needs no secrets.
 name: test
 on:
   push:
+    branches: [main]
+  pull_request:
 
 permissions:
   contents: read
@@ -15,6 +18,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Workflow check (CLAUDE.md, decisions record, plans, skills)
+        run: python3 .claude/workflow/check.py
       - run: npm ci
       - run: npm run typecheck
       - run: npm test

@@ -70,6 +70,7 @@ In your own TypeScript project, mark a function and run `vantle generate` from t
 - [docs/design/](./docs/design/) holds the design notes for the extractor's core and the correctness check.
 - [docs/reviews/round-1.md](./docs/reviews/round-1.md) lists the bugs that the first code review found.
 - [docs/experiments/](./docs/experiments/) holds the measurements on public repos, with the data and scripts to recompute them.
+- [docs/decisions.md](./docs/decisions.md) lists the decisions that are settled, and links to why each was made. [CLAUDE.md](./CLAUDE.md) describes how the work is done, mostly by coding agents, with a person approving plans and merging.
 
 ## Development
 
