@@ -5,6 +5,32 @@ Full rationale for this theme's decisions, newest first. The lean, auto-loaded i
 
 ---
 
+## 2026-11-06 — main takes changes only by pull request with `test` and `check` green; Dependabot proposes monthly grouped updates, with elkjs and ts-morph and vitest majors held
+
+**Status:** live, indexed
+
+**Context.** Until now nothing stopped a change with failing checks from reaching `main`, or a
+direct push from skipping review. Dependencies were only updated by hand, and GitHub's secret
+scanning was off.
+
+**Decision.** A ruleset on `main` blocks deleting and force-pushing it, takes changes only through
+pull requests, and requires the `test` and `check` jobs to pass. The maintainer can bypass these
+rules only when merging a pull request, where GitHub asks them to confirm it; a direct push to
+`main` is refused for everyone. GitHub's secret scanning with push protection, Dependabot alerts
+and Dependabot security updates are on. `.github/dependabot.yml` opens one grouped pull request a
+month for npm minor and patch updates, one pull request per major update, and one grouped pull
+request for GitHub Actions, with no auto-merge. elkjs is held at 0.9.3, for security updates too,
+because a new version can change the committed SVGs. Major updates of ts-morph and vitest are held
+because they can change the extractor's charts or the generated path tests.
+
+**Rejected.**
+- *Auto-merging small updates.* Every change here is public and reviewed, and a monthly pull
+  request is cheap to read.
+- *Requiring an approving review.* The maintainer is the only reviewer with merge rights, so a
+  required approval would only add a bypass click.
+
+---
+
 ## 2026-11-05 — Adopted the workflow kit at the full level, with its process files and this record published in the public repo
 
 **Status:** live, indexed

@@ -33,5 +33,6 @@ anything the code already shows.
 
 ## Process & tooling · `docs/decisions/process.md`
 
+- 2026-11-06 — main takes changes only by pull request with `test` and `check` green; Dependabot proposes monthly grouped updates, with elkjs and ts-morph and vitest majors held
 - 2026-11-05 — Adopted the workflow kit at the full level, with its process files and this record published in the public repo
 - 2026-11-05 — Built in public, guarded by CLAUDE.md's public rules, a CI leak check with gitleaks, and a stricter local check kept outside the repo

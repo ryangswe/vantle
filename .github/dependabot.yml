@@ -1,0 +1,37 @@
+# Dependency updates: one grouped pull request a month per ecosystem for minor and patch updates,
+# and one pull request per major update, with no auto-merge. Each one goes through the same checks
+# as any other pull request (`test` and `check`, which the main branch's ruleset requires), and the
+# maintainer reads it before merging.
+#
+# Held:
+#   - elkjs stays at exactly 0.9.3, for security pull requests too (versions ">= 0"; a name alone
+#     holds only version updates). A new version can change the layout, which rewrites the
+#     committed SVGs in docs/images/ and fails test/svg.test.ts.
+#   - ts-morph major updates. A major version can change the charts the extractor produces.
+#   - vitest major updates. Vantle runs vitest at runtime for the generated path tests, with its
+#     own Vite-plugin probes, so a major update needs a deliberate pull request.
+# A security alert for a held package still shows in the repository's Dependabot alerts.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      npm-dependencies:
+        patterns: ["*"]
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: elkjs
+        versions: [">= 0"]
+      - dependency-name: ts-morph
+        update-types: ["version-update:semver-major"]
+      - dependency-name: vitest
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns: ["*"]
