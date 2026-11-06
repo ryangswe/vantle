@@ -2,7 +2,7 @@
 
 Vantle is an experiment in checking what coding agents build. It has two parts so far. The first turns the decision logic inside a TypeScript function into a flowchart and checks that chart against the real code. The second, called a receipt, checks an agent's "done" against examples that a person agreed to before the work started.
 
-> **Status: pre-MVP, and rough.** This is a solo project, built in public. Nothing here is stable, there is no release, and the commands and file formats will change without notice. The chart extractor works on small, plain functions, but it still draws some charts wrong and many too big. Chart work is paused while the receipt is tested. The receipt has no code yet, and so far it has only been run by hand. The first test of it missed every bug it was aimed at. The details are in [ROADMAP.md](./ROADMAP.md) and in the post [Making Vantle, part 1](https://raymondyang.dev/writing/done-is-doing-a-lot-of-work).
+> **Status: pre-MVP, and rough.** This is a solo project, built in public. Nothing here is stable, there is no release, and the commands and file formats will change without notice. The chart extractor works on small, plain functions, but it still draws some charts wrong and many too big. Chart work is paused while the receipt is tested, apart from one change to how charts are drawn. The receipt has no code yet, and so far it has only been run by hand. The first test of it missed every bug it was aimed at. The details are in [ROADMAP.md](./ROADMAP.md) and in the post [Making Vantle, part 1](https://raymondyang.dev/writing/done-is-doing-a-lot-of-work).
 
 ## Charts from code
 
@@ -17,9 +17,9 @@ Vantle then builds a chart of the function's checks and outcomes with static ana
 
 "Verified" means that a test drove the real code through exactly that route to that outcome. It is evidence for those inputs, not a proof that the chart matches the code for every input. Anything Vantle can't check is reported as unverified or listed, never counted as verified.
 
-[`fixtures/slack-notify`](./fixtures/slack-notify) is a TypeScript version of Slack's published notification flowchart, written for this project. This is the chart Vantle builds from it.
+[`fixtures/slack-notify`](./fixtures/slack-notify) is a TypeScript version of Slack's published notification flowchart, written for this project. This is the chart Vantle builds from it. Vantle draws each chart as an SVG, with right-angle arrows and a separate end for each arrow into an outcome, as in Slack's own chart. It also writes the same chart in Mermaid.
 
-![Labeled chart generated from the Slack fixture](docs/images/slack-fixture-m2.png)
+![Labeled chart generated from the Slack fixture](docs/images/slack-fixture.svg)
 
 On real code, GrowthBook's `runExperiment` (415 lines), which decides whether a user is in an A/B test and which variation they get, comes out as 27 boxes. Every arrow but one is verified against the real code. The details are in [docs/m4-growthbook.md](./docs/m4-growthbook.md).
 
@@ -42,7 +42,7 @@ npm run build
 # Which functions hold the most decision logic?
 node dist/cli.js -p fixtures/slack-notify scan
 
-# Chart the marked function. This writes .vantle/flows/should-notify.{raw.json,mmd,md},
+# Chart the marked function. This writes .vantle/flows/should-notify.{raw.json,svg,mmd,md},
 # plus should-notify.json when labels run.
 # Labels need Anthropic credentials (ANTHROPIC_API_KEY or `ant auth login`).
 # Without them, or with --no-label, the chart shows raw code.

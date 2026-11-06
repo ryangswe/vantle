@@ -57,8 +57,11 @@ export function toMermaid(flow: AnyFlow): string {
   return lines.join('\n') + '\n'
 }
 
-/** A markdown page with the chart, legend and stats. GitHub renders the chart inline. */
-export function toMarkdown(flow: AnyFlow): string {
+/**
+ * A markdown page with the chart, legend and stats. By default it shows the SVG chart written
+ * next to it, with the Mermaid version folded below. With `svg: false`, it shows only Mermaid.
+ */
+export function toMarkdown(flow: AnyFlow, { svg = true }: { svg?: boolean } = {}): string {
   const labeled = isLabeled(flow)
   const decisions = flow.nodes.filter((n) => n.kind === 'decision').length
   const outcomes = flow.nodes.filter((n) => n.kind === 'outcome').length
@@ -71,9 +74,19 @@ export function toMarkdown(flow: AnyFlow): string {
       ? `Labels written by ${flow.labeling.model} and checked against the extracted chart. The table below shows the code behind each box.`
       : 'Boxes show the raw code for each condition. Product-language labels come from `vantle label`.',
     '',
-    '```mermaid',
-    toMermaid(flow).trimEnd(),
-    '```',
+    ...(svg
+      ? [
+          `![Chart of ${(flow.flow.question || flow.flow.id).replace(/[\\[\]]/g, '\\$&')}](./${flow.flow.slug}.svg)`,
+          '',
+          '<details><summary>The same chart in Mermaid</summary>',
+          '',
+          '```mermaid',
+          toMermaid(flow).trimEnd(),
+          '```',
+          '',
+          '</details>',
+        ]
+      : ['```mermaid', toMermaid(flow).trimEnd(), '```']),
     '',
     '## Legend',
     '',
@@ -214,7 +227,7 @@ function className(node: AnyNode): string {
 }
 
 /** Switch cases show their label when one was written; yes/no stay as they are. */
-function edgeLabel(node: AnyNode | undefined, label: string): string {
+export function edgeLabel(node: AnyNode | undefined, label: string): string {
   if (node?.kind === 'decision' && 'caseLabels' in node) return node.caseLabels[normalizeCode(label)] ?? label
   return label
 }

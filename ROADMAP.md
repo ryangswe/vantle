@@ -6,7 +6,7 @@ This is a direction, not a promise. It changes as the experiments come in. The p
 
 Vantle started as a tool that turns a function's decisions into a flowchart and checks the chart against the real code. Measured on 60 functions from 20 public TypeScript repos, the charts missed their own bar, and fresh reviewers kept finding bugs in them after the work was called done. That pointed at a more basic problem than charts. There was no cheap, trustworthy way to check that a change does what was agreed, whoever or whatever made it.
 
-So chart work is paused, and the current focus is the receipt. A receipt checks an agent's "done" against examples that a person approved before the work, and it is decided by running checks, not by an AI reading the code. It has only been run by hand so far. In a replay of 6 past bugs, rows that an agent wrote without anyone reviewing them caught none of them. The bugs sat next to what the request described, not inside it.
+So chart work is paused, apart from how charts are drawn, which changed to SVGs with right-angle arrows like the chart in the post. The current focus is the receipt. A receipt checks an agent's "done" against examples that a person approved before the work, and it is decided by running checks, not by an AI reading the code. It has only been run by hand so far. In a replay of 6 past bugs, rows that an agent wrote without anyone reviewing them caught none of them. The bugs sat next to what the request described, not inside it.
 
 ## Next
 

@@ -98,7 +98,7 @@ const charts = top.map((row, i) => {
     const decisions = flow.nodes.filter((n) => n.kind === 'decision')
     const labels = decisions.map((n) => (n.kind === 'decision' ? n.rawLabel : ''))
     const short = labels.filter((l) => l.length <= 160).length
-    writeFileSync(path.join(out, `chart-${i + 1}.md`), toMarkdown(flow))
+    writeFileSync(path.join(out, `chart-${i + 1}.md`), toMarkdown(flow, { svg: false }))
     writeFileSync(path.join(out, `chart-${i + 1}.json`), JSON.stringify(flow))
     return {
       ...base,
