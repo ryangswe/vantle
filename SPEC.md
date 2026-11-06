@@ -35,14 +35,14 @@ The engineer who owns tangled business logic and keeps explaining it to PMs, new
 - Entry points marked with `// @vantle: "<question>"`
 - Following calls into other functions in the same repo, up to a depth limit
 - An LLM labeling pass with strict validation
-- Mermaid output, which GitHub renders in markdown automatically
+- SVG charts, laid out with ELK, plus Mermaid output, which GitHub renders in markdown automatically
 - Path tests written with vitest
 - `vantle scan` to find branch-heavy functions worth marking
 - Logging cost and time for every run
 
 **Not in v0**
 
-Other languages; tracing across services; CI and PR behavior diffs; a UI or viewer; editing charts; layout tuning; caching; spec comparison; monorepo-specific handling.
+Other languages; tracing across services; CI and PR behavior diffs; a UI or viewer; editing charts; caching; spec comparison; monorepo-specific handling.
 
 ## 4. Concepts
 
@@ -108,7 +108,7 @@ Each step is marked **[D]** (deterministic, no LLM) or **[L]** (LLM). The LLM st
    - Finally, the labeled chart must behave exactly like the raw one for every input.
 
    If validation fails, retry the label step once with the errors included, then stop with a clear message.
-5. **Render [D].** Write the labeled graph to `.vantle/flows/<flow>.json`, plus `<flow>.mmd` and `<flow>.md` (Mermaid embedded in markdown, with the legend and path status). The raw graph from step 2 is kept next to it as `<flow>.raw.json`.
+5. **Render [D].** Write the labeled graph to `.vantle/flows/<flow>.json`, plus `<flow>.svg`, `<flow>.mmd` and `<flow>.md`. The SVG is laid out by ELK, with right-angle arrows. "Yes" leaves a box from the bottom and "no" from the right, each case of a switch leaves from its own slot on the bottom edge, and every arrow into an outcome gets its own small end. The markdown page shows the SVG, the Mermaid chart folded below it, the legend and the path status. The raw graph from step 2 is kept next to it as `<flow>.raw.json`.
 6. **Verify [L+D].**
    - **[D]** Pick a set of paths that together cover every arrow in the chart at least once. All paths are still counted and reported. Testing every path doesn't scale: branches that rejoin multiply the count. The Slack fixture has 1,311 paths, and 20 of them cover all 57 arrows. `--all-paths` tests every path for small flows.
    - **[L]** For each path, Claude writes a Vitest test file that sets up inputs to drive the real code through that path's answers, and calls the function once through Vantle's `run()` helper. Tests don't assert outcomes. Tests are written five paths per request, three requests at a time.
@@ -207,7 +207,7 @@ Human notes are **not** stored in generated files. v0 reserves `.vantle/notes.js
 | `vantle extract [flow]` | D | Writes only the raw graph. Useful for debugging and for the future skill. |
 | `vantle label [flow]` | L | Raw graph → labeled graph. |
 | `vantle validate [flow]` | D | Checks a labeled graph against its raw graph. |
-| `vantle render [flow]` | D | JSON → `.mmd` / `.md`. |
+| `vantle render [flow]` | D | JSON → `.svg` / `.mmd` / `.md`. |
 | `vantle generate [flow]` | all but verify | The everyday command. |
 | `vantle verify [flow]` | L+D | Generates and runs the path tests, then updates statuses. |
 
@@ -225,7 +225,7 @@ Exit codes: `0` ok · `1` usage/config error · `2` validation failed · `3` one
 
 ## 11. Tech stack
 
-TypeScript on Node 22.12+ · ts-morph · vitest (for Vantle itself and for generated path tests) · zod · commander · the official Anthropic TypeScript SDK · Mermaid as text output (no rendering dependency).
+TypeScript on Node 22.12+ · ts-morph · vitest (for Vantle itself and for generated path tests) · zod · commander · the official Anthropic TypeScript SDK · elkjs for SVG chart layout · Mermaid as text output.
 
 ## 12. Fixtures and how we score
 

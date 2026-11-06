@@ -38,7 +38,7 @@ for (const repo of readdirSync(oldDir)) {
       const decisions = flow.nodes.filter((n) => n.kind === 'decision')
       const labels = decisions.map((n) => (n.kind === 'decision' ? n.rawLabel : ''))
       const short = decisions.length ? labels.filter((l) => l.length <= 160).length / decisions.length : 1
-      writeFileSync(path.join(out, `chart-${c.rank}.md`), toMarkdown(flow))
+      writeFileSync(path.join(out, `chart-${c.rank}.md`), toMarkdown(flow, { svg: false }))
       writeFileSync(path.join(out, `chart-${c.rank}.json`), JSON.stringify(flow))
       return {
         ...c,

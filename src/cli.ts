@@ -11,6 +11,7 @@ import { anthropicModel, AuthFailed, DEFAULT_EFFORT, DEFAULT_MODEL, DEFAULT_TEST
 import { labelOutputFromFlow, shortIds, validateLabels } from './label/validate.js'
 import { findAnnotations, flowSlug, loadProject, relPath, UsageError, type Annotation, type VantleProject } from './project.js'
 import { completenessSummary, toMarkdown, toMermaid } from './render/mermaid.js'
+import { toSvg } from './render/svg.js'
 import { scan } from './scan.js'
 import { RawFlow } from './schema/flow.js'
 import { isLabeled, LabeledFlow, type AnyFlow } from './schema/labeled.js'
@@ -118,13 +119,13 @@ program
 
 program
   .command('render')
-  .description('write Mermaid (.mmd) and markdown (.md) charts, using labels when they are up to date')
+  .description('write SVG (.svg), Mermaid (.mmd) and markdown (.md) charts, using labels when they are up to date')
   .argument('[flow]', 'flow slug; all extracted flows if omitted')
-  .action((flow: string | undefined) => {
+  .action(async (flow: string | undefined) => {
     const vp = project()
     for (const slug of selectExtracted(vp, flow)) {
       const { flow: chosen, note } = bestFlow(vp, slug)
-      const written = render(vp, chosen)
+      const written = await render(vp, chosen)
       print(`✔ ${slug}  → ${written.map((w) => rel(vp, w)).join(', ')}`)
       if (note) print(`  ! ${note}`)
     }
@@ -156,7 +157,7 @@ program
           note = 'Skipped labels: no Anthropic credentials found. Set ANTHROPIC_API_KEY (or run `ant auth login`), or pass --no-label.'
         }
       }
-      files.push(...render(vp, chart))
+      files.push(...(await render(vp, chart)))
       summarize(vp, result.flow, files)
       if (chart !== result.flow) print(`  labeled by ${(chart as LabeledFlow).labeling.model}  ${labelingSummary(chart as LabeledFlow)}`)
       if (note) print(`  ! ${note}`)
@@ -189,7 +190,7 @@ program
       }
       const file = isLabeled(verified) ? labeledPath(vp, slug) : path.join(flowsDir(vp), `${slug}.raw.json`)
       writeFileSync(file, JSON.stringify(verified, null, 2) + '\n')
-      render(vp, verified)
+      await render(vp, verified)
 
       const v = verified.verification!
       const c = v.counts
@@ -382,14 +383,23 @@ function assignSlugs(vp: VantleProject, annotations: Annotation[]): Map<Annotati
   )
 }
 
-function render(vp: VantleProject, flow: AnyFlow): string[] {
+async function render(vp: VantleProject, flow: AnyFlow): Promise<string[]> {
   const dir = flowsDir(vp)
   mkdirSync(dir, { recursive: true })
+  const svg = path.join(dir, `${flow.flow.slug}.svg`)
   const mmd = path.join(dir, `${flow.flow.slug}.mmd`)
   const md = path.join(dir, `${flow.flow.slug}.md`)
+  let drawing: string
+  try {
+    drawing = await toSvg(flow)
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error)
+    throw new UsageError(`Couldn't draw the chart for "${flow.flow.slug}": ${reason} Run \`vantle extract ${flow.flow.slug}\` again to rebuild it.`)
+  }
+  writeFileSync(svg, drawing)
   writeFileSync(mmd, toMermaid(flow))
   writeFileSync(md, toMarkdown(flow))
-  return [mmd, md]
+  return [svg, mmd, md]
 }
 
 function summarize(vp: VantleProject, flow: RawFlow, files: string[]) {
