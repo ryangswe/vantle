@@ -35,11 +35,12 @@ The correctness corpus takes synthetic cases only. Its README says how to write 
 
 ## Working agreements
 
-- **Never change files on the default branch** (`main`). Branch first (`git checkout -b <slug>`) and open a pull request. `.claude/hooks/guard-default-branch.py` blocks Edit/Write there as a backstop, but cannot see shell writes (`sed -i`, `>>`).
+- **Never change files on the default branch** (`main`). Branch first (`git checkout -b <slug>`) and open a pull request. `.claude/hooks/guard-default-branch.py` blocks edits, `git commit` and pushes to it as a backstop, but does not judge other shell writes (`sed -i`, `>>`).
 - Don't add AI attribution to commits or pull requests: no `Co-Authored-By` trailer for an AI and no "Generated with" line.
 - Keep the status honest. Vantle is pre-MVP, and the docs say so. Don't describe anything as verified, proven or working beyond what a run has shown.
 - Write in full, plain sentences. In running prose, avoid a short lead-in followed by a colon and sentence fragments.
 - Record decisions a later session could plausibly reopen (direction, architecture, contracts, security and privacy, licensing, rejected alternatives): one line in the auto-loaded index @docs/decisions.md and the full entry in its `docs/decisions/<theme>.md`. The index header sets the format and budget.
+- **Size the task first, and say which lane in one line.** A *small change* (a few files, easy to revert, and no change to a shared contract, security or privacy posture, or product behaviour) takes the short lane: branch, change, `/checkpoint`, one `reviewer` pass, then a pull request whose description ends with a `Decision:` line if one was made. No plan, no decisions-record entry, no closeout. Anything bigger, or a small change that grows, takes the full process. A `Decision:` line is promoted to the decisions record only if a later session could reopen it.
 - For large milestones, write the plan to `docs/plans/YYYY-MM-DD-<slug>.md` from `docs/plans/_template.md`, so a fresh session can execute it from the file alone. Keep its `Status:` line and the active list in `docs/plans/README.md` current.
 - `CLAUDE.md` loads in every session and is capped at 14 KB by the workflow check. Always-on text is for a rule every session needs; add some only by cutting some. Procedures go in a skill, area rules in `.claude/rules/` with a `paths:` header.
 
@@ -88,6 +89,7 @@ For non-trivial work the lead session is the orchestrator: it owns the goal, the
 - **Two strikes:** when the same test, typecheck or build error survives two fix attempts, stop patching. Ask `reviewer` (or `architect` when the cause is unclear) for a root-cause read before a third attempt; a worker reports ESCALATE instead.
 - Before declaring any change done, run `reviewer` with fresh context on the plan and the diff, for at least two passes on non-trivial work. Passing tests are not proof. Fix the material findings, re-run the checks.
 - Ending a session mid-task, switching topic, or past ~300–400k tokens: run `/handoff` (the `handoff` skill). It records state in the repository and prints a short prompt for the next session. Don't let a conversation be the only place work's state lives.
+- Weekly, at a handoff, or when `.claude/worktrees/` piles up: run `/gc` (the `gc` skill) to remove worktrees and branches whose work is already in the default branch.
 - **Close out:** the plan's `Status:` line and the active list; the execution log compressed into the completion summary with its lesson or `NO_ENTRY`; decision lines that meet the index bar; a short summary for the maintainer.
 
 <!-- Workflow kit (full). `workflow-kit sync` updates the managed files under .claude/; this file
