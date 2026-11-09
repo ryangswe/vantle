@@ -49,9 +49,9 @@ The correctness corpus takes synthetic cases only. Its README says how to write 
 For non-trivial work the lead session is the orchestrator: it owns the goal, the architecture, the task graph, integration and every exchange with the maintainer. Workers are the agents in `.claude/agents/` (`planner`, `architect`, `executor`, `reviewer`, `Explore`); their checklists and report formats live there.
 
 - **Milestone specs: do not edit files until the architecture and the first small change are explained and approved.** Inspect read-only first.
-- Decompose work into tasks with dependencies, complexity class, success criteria, escalation conditions and verification. **Price every task in the maintainer's hours**: they are the scarcest resource.
+- Decompose work into tasks with dependencies, success criteria and verification. **Price the work in the maintainer's hours**: they are the scarcest resource.
 - Work directly when a task is small, tightly coupled or cheaper to do than to brief. Delegate when work can run concurrently, is self-contained, would flood the lead's context, or needs a fresh judgment. Every worker gets a bounded task and ends with SUCCESS, ESCALATE or BLOCKED; on ESCALATE or BLOCKED, stop the tasks that depend on it and update the plan.
-- Present the task graph, delegation, model classes and approval gates **before dispatching code-writing workers**, unless the maintainer has authorised autonomous work. Read-only workers need no approval. Ask before anything that changes product behaviour, architecture, compatibility, security or privacy posture, scope or cost.
+- Present the task graph, delegation and approval gates **before dispatching code-writing workers**, unless the maintainer has authorised autonomous work. Read-only workers need no approval. Ask before anything that changes product behaviour, architecture, compatibility, security or privacy posture, scope or cost.
 
 ### Owner-only actions (each time, never implied by plan approval)
 
@@ -60,22 +60,10 @@ For non-trivial work the lead session is the orchestrator: it owns the goal, the
 - Changing repository settings or visibility, or posting about the project anywhere public.
 - API spend beyond a few dollars, such as `label` or `verify` over many functions or a whole corpus.
 
-### Model routing
+### Models
 
-**The lead runs on Opus at high effort**, chosen at the start of a session. Plans name capability classes; map them at dispatch: ROUTINE → Sonnet (Haiku for lookups), STRONG → Opus, FRONTIER → Fable. Update the mapping when models change.
-
-| Agent | Default | Use |
-|---|---|---|
-| `Explore` | Haiku, low | code search; fetching one decision entry, plan task or doc section |
-| `executor` | Sonnet, medium | ROUTINE tasks; override to Opus for STRONG |
-| `reviewer` | Opus, high | every review; Sonnet only for ROUTINE-only work |
-| `planner` | Fable, high | milestone plans, re-plans after an ESCALATE |
-| `architect` | Fable, high | judgement calls mid-task; resume it with `SendMessage` for follow-ups |
-
-- Call FRONTIER where it pays: a milestone plan, a rule or bar set before measuring, a re-plan, a result the lead cannot explain, a root cause after two strikes.
+- **The lead runs on Opus at high effort**, chosen at the start of a session and not switched during it. Each model has its own prompt cache, so a switch re-reads the whole conversation uncached; ask `architect`, or start a session. Each agent's model and effort are set in its agent file; when a plan task names a stronger model, dispatch it on that one.
 - **Keep the lead's context small.** The lead does not read a decisions theme file or a plan over ~30 KB itself; `Explore` fetches the entry or task it needs.
-- **Don't switch the lead's model or effort mid-session**: each model has its own prompt cache, so the next turn re-reads the whole conversation uncached. Ask `architect`, or start a session.
-- Never set `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`: it ignores the agent files' `model`.
 
 ### Concurrency
 
@@ -90,7 +78,7 @@ For non-trivial work the lead session is the orchestrator: it owns the goal, the
 - Before declaring any change done, run `reviewer` with fresh context on the plan and the diff, for at least two passes on non-trivial work. Passing tests are not proof. Fix the material findings, re-run the checks.
 - Ending a session mid-task, switching topic, or past ~300–400k tokens: run `/handoff` (the `handoff` skill). It records state in the repository and prints a short prompt for the next session. Don't let a conversation be the only place work's state lives.
 - Weekly, at a handoff, or when `.claude/worktrees/` piles up: run `/gc` (the `gc` skill) to remove worktrees and branches whose work is already in the default branch.
-- **Close out:** the plan's `Status:` line and the active list; the execution log compressed into the completion summary with its lesson or `NO_ENTRY`; decision lines that meet the index bar; a short summary for the maintainer.
+- **Close out:** the plan's `Status:` line and the active list; the execution log compressed into the completion summary; decision lines that meet the index bar; a short summary for the maintainer.
 
 <!-- Workflow kit (full). `workflow-kit sync` updates the managed files under .claude/; this file
 is the repository's own. -->
