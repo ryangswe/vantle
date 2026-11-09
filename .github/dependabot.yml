@@ -11,6 +11,10 @@
 #   - vitest major updates. Vantle runs vitest at runtime for the generated path tests, with its
 #     own Vite-plugin probes, so a major update needs a deliberate pull request.
 # A security alert for a held package still shows in the repository's Dependabot alerts.
+#
+# Forced: package.json's `overrides` gives @ts-morph/common minimatch ^11.0.1, because it asks for
+# ^10 and only 11.0.1 fixes GHSA-g3hv-75wg-m249. Remove the override once a @ts-morph/common
+# release asks for minimatch 11 or later itself.
 version: 2
 updates:
   - package-ecosystem: npm
