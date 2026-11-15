@@ -99,7 +99,7 @@ python3 -I <skill folder>/check_anchors.py <maps folder>/<repo-name>/<area>/map.
 }
 ```
 
-- **Anchor:** `{"path": ..., "symbol": ...}` or `{"path": ..., "lines": [start, end]}`. Paths are relative to the repo root.
+- **Anchor:** `{"path": ..., "symbol": ...}` or `{"path": ..., "lines": [start, end]}`. Paths are relative to the repo root. A dotted symbol such as `Store.load` has to be defined directly in the body of `Store` (a class, interface, enum, namespace, object literal or Python class, or for Go a method on that receiver), so a variable with the same name inside some function doesn't count. Dotted symbols work for TypeScript, JavaScript, Python and Go. In other languages, and for quoted keys, fields set in a constructor or struct fields, use the plain name or a `lines` anchor.
 - **`evidence`:**
   - `{"kind": "none"}`;
   - or `{"kind": "test" | "command" | "live", "ref": "<test id, command, or what the user checked>", "result": "matched" | "mismatched" | "couldn't run", "at": "<sha>"}`.
